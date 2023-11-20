@@ -1,0 +1,148 @@
+.pianoScreen {
+	--f-monospace: '04b08', monospace;
+	background: var(--pianoScreen-background, #4c4d94);
+	color: var(--pianoScreen-foreground, #dadef3);
+	font-family: var(--f-monospace);
+	// width: 12.5em;
+	// height: 3.75em;
+	font-weight: bolder;
+	width: 200px;
+	height: 62px;
+	font-size: 16px;
+	line-height: 0.75;
+	letter-spacing: 0.01em;
+	display: grid;
+	// opacity: .5;
+	grid-template-columns: 2.5em 1fr 2.375em;
+	grid-template-rows: auto 1fr;
+	overflow: hidden;
+
+	text-shadow: 0 0 1px;
+	box-shadow:
+		inset 0 0 3px 0 rgba(0, 0, 0, 0.8),
+		// 0 0 3px 1px rgba(0,0,0,.2)
+		// 0 0 3px 3px red
+;
+
+	@at-root :is(#{&}-item, #{&}-item-pedalStats, #{&}-item-pedalStats-ped) {
+		min-width: 0;
+	}
+
+	&-Html {
+		z-index: 0;
+		-webkit-backface-visibility: hidden !important;
+		backface-visibility: hidden !important;
+		&,
+		* {
+			pointer-events: none !important;
+			transition: none !important; // hayup[ an chome ginibo ko na baga ni. TODO WHY
+		}
+	}
+
+	&-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+
+		&-voiceIndex {
+			color: var(--pianoScreen-background, #384488);
+			background: var(--pianoScreen-foreground, #d7e0f5);
+			font-weight: bolder;
+			letter-spacing: 0.01em;
+		}
+
+		&-voiceName {
+			grid-column: span 2;
+			border-bottom: 0.1em solid;
+			padding-block: 0.5em;
+			padding-left: 0.25em;
+			letter-spacing: 0.1em;
+
+			> span {
+				display: block;
+			}
+		}
+
+		&-randomShit {
+			font-size: 0.75em;
+			padding: 0.5em;
+		}
+
+		&-pedalStats {
+			grid-column: span 2;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 0.5em;
+			padding: 0.25em;
+
+			&-ped {
+				font-size: 0.5em;
+
+				> span {
+					display: block;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+					max-width: 100%;
+				}
+
+				&::after {
+					display: block;
+					border: 0.3em solid;
+					background-image: linear-gradient(
+							to right,
+							transparent 0%,
+							transparent calc(50% - 0.1em),
+							currentColor calc(50% - 0.15em),
+							currentColor calc(50% + 0.15em),
+							transparent calc(50% + 0.2em),
+							transparent 100%
+						),
+						linear-gradient(
+							to right,
+							currentColor 0%,
+							currentColor
+								calc(100% * var(--pianoScreen-ped-threshold, 0)),
+							transparent calc(100% * var(--pianoScreen-ped-threshold, 0))
+						);
+					content: '';
+					height: 1.5em;
+					margin-inline: auto;
+					margin-top: 0.5em;
+					box-shadow:
+						inset 0 0 1px,
+						0 0 1px;
+				}
+			}
+		}
+
+		&-playStats {
+			padding: 0.25em 0.25em 0.25em 0;
+			text-align: right;
+			align-items: flex-end;
+			justify-content: flex-end;
+			align-self: end;
+			flex-direction: column;
+			letter-spacing: 0;
+
+			&-stat {
+				display: block;
+
+				&-demo {
+					font-size: 0.5em;
+					margin-bottom: 0.5em;
+					strong {
+						display: block;
+						font-size: 0.75em;
+						margin-bottom: 0.25em;
+					}
+				}
+
+				&-transpose {
+					font-size: 0.6em;
+				}
+			}
+		}
+	}
+}

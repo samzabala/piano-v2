@@ -1,0 +1,307 @@
+.keebMap {
+	--keeb-size: 4.5em;
+	--keeb-gap: 0.1em;
+	--keeb-span: 4;
+	--keeb-spacer: calc(var(--keeb-size) / var(--keeb-span));
+	position: fixed;
+	z-index: 9;
+	top: 3.75em;
+	right: 3em;
+	left: 3em;
+	margin: auto;
+	font-size: min(20px, 1.25vw, 2.5vh);
+	// filter: drop-shadow(0 0.5em 6em var(--c-noot));
+	z-index: 100;
+	text-align: center;
+	pointer-events: none;
+
+	@media (max-width: 767px) {
+		font-size: min(20px, calc(1.7vw - 0.05rem), 2.5vh);
+		// top: min(7rem, 18vw, 25vh);
+		left: auto;
+		// right: 3em;
+	}
+
+	&-keys {
+		margin: auto;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, auto);
+		// grid-template-rows: 6em 5em;
+		// gap: 0;
+		gap: var(--keeb-gap);
+		justify-content: center;
+		margin-inline: auto;
+		-webkit-appearance: none;
+		appearance: none;
+		margin-top: 2rem;
+
+		@at-root :is(&, &-item) {
+			min-width: 0;
+		}
+
+		&-item {
+			pointer-events: none;
+			max-width: 100%;
+			width: var(--keeb-size);
+			height: var(--keeb-size);
+			background-color: var(--c-noot);
+			border: 1px solid var(--c-not-as-dark);
+			position: relative;
+			padding: 0.01em;
+			line-height: 1.25;
+			flex-direction: column;
+			justify-self: end;
+			// box-shadow: inset 0 -.5em 0 0 rgba(0,0,0,.5);
+			border-inline: 0.75em solid rgba(0, 0, 0, 0.2);
+			border-top: 0.375em solid rgba(0, 0, 0, 0.3);
+			border-bottom: 1em solid rgba(0, 0, 0, 0.5);
+			color: var(--c-noot-polar);
+			margin-bottom: var(--keeb-spacer);
+			grid-column: span var(--keeb-span);
+			box-shadow: 0 0.2em 0 0.1em rgba(0, 0, 0, 0.3);
+			transition: none;
+
+			&:is(:hover, :focus-visible, .active) {
+				border-inline-color: rgba(0, 0, 0, 0.3);
+				border-top-color: rgba(0, 0, 0, 0.4);
+				border-bottom-color: rgba(0, 0, 0, 0.6);
+				box-shadow: 0 0.1em 0 0em rgba(0, 0, 0, 0.3);
+			}
+
+			&::before {
+				position: absolute;
+				width: max-content;
+				letter-spacing: 0;
+				text-transform: none;
+				opacity: 0.5;
+				bottom: 100%;
+				left: -0.75em;
+				color: var(--c-noot-polar);
+				background: var(--c-noot);
+				border-radius: 0.1em;
+				padding: 0.25em 0.5em;
+				margin-bottom: var(--keeb-spacer);
+			}
+			&,
+			&:after {
+				border-radius: 0.25em;
+			}
+
+			&:after {
+				content: '';
+				background-color: inherit;
+				display: block;
+				position: absolute;
+				top: -0.1em;
+				left: -0.1em;
+				bottom: -0.1em;
+				right: -0.1em;
+				z-index: -1;
+				border: 0.1em solid rgba(127, 127, 127, 0.1);
+				background-image: linear-gradient(
+					to bottom right,
+					transparent 0%,
+					rgba(0, 0, 0, 0.2) 100%
+				);
+			}
+
+			*,
+			*:before,
+			*:after {
+				pointer-events: none;
+			}
+
+			&:is(.enabled, :focus-visible, .active, :hover:active) {
+			}
+
+			&:is(:focus-visible, .active, :hover:active) {
+				transform: translateY(0.25em) scale(0.99);
+				transform-origin: center bottom;
+				color: var(--c-primary-polar);
+				background: var(--c-primary);
+
+				&::before {
+					transform: translateY(-0.23em) scale(1.01);
+					transform-origin: center center;
+				}
+			}
+
+			&:where(.enabled) {
+				box-shadow: 0 0 0 0.3em var(--c-primary);
+				z-index: 1;
+			}
+
+			&::after {
+				content: '';
+				display: block;
+			}
+
+			:is(span, strong) {
+				display: block;
+			}
+
+			strong {
+				font-size: 0.6em;
+				letter-spacing: 0;
+				text-transform: capitalize;
+				display: block;
+			}
+
+			&-note {
+				&-white {
+					background-color: var(--c-light);
+					color: var(--c-dark);
+					grid-row: 3;
+					z-index: 1;
+
+					&:nth-child(1 of #{&}) {
+						grid-column: span calc((2 * var(--keeb-span)));
+					}
+				}
+				&-black {
+					background-color: var(--c-dark);
+					color: var(--c-light);
+					grid-row: 2;
+					margin-bottom: 0;
+
+					&:is(:nth-child(5n - 2 of #{&}), :nth-child(5n + 1 of #{&})) {
+						grid-column: span calc(2 * var(--keeb-span));
+					}
+
+					&:nth-child(1 of #{&}) {
+						grid-column: span calc((2 * var(--keeb-span)) + 2);
+					}
+				}
+			}
+
+			&-voice {
+				&:nth-child(1 of #{&}) {
+					margin-left: var(--keeb-spacer);
+					grid-column: span calc(var(--keeb-span) + 1);
+
+					&::before {
+						content: 'Voice Presets';
+					}
+				}
+			}
+
+			&-ambience {
+				&:nth-child(1 of #{&}) {
+					grid-column: span calc((6 * var(--keeb-span)) + 1);
+				}
+				&:nth-last-child(1 of #{&}) {
+					&::before {
+						content: 'Ambience';
+						right: -0.75em;
+						left: auto;
+					}
+				}
+			}
+
+			&-demo {
+				&::before {
+					content: 'Demo';
+				}
+			}
+
+			&-pedal {
+				grid-row: 4;
+
+				&:nth-child(1 of #{&}) {
+					grid-column: span calc((5 * var(--keeb-span)) + 2);
+				}
+
+				&:nth-child(2 of #{&}) {
+					&::before {
+						content: 'Pedals';
+					}
+				}
+			}
+
+			&-pedal:nth-child(2 of #{&}-pedal),
+			&-metronome {
+				&::before {
+					bottom: auto;
+					top: 100%;
+					left: -50%;
+					right: -50%;
+					text-align: center;
+					margin-bottom: 0;
+					margin-inline: auto;
+					margin-top: 1.5em;
+				}
+			}
+
+			&-metronome {
+				grid-row: 4;
+				grid-column: span calc(var(--keeb-span) + 1);
+				&::before {
+					content: 'Metronome';
+				}
+			}
+
+			@at-root :is(&-octave, &-transpose) {
+			}
+
+			&-transpose-up {
+				grid-row: 3;
+				grid-column: span calc(var(--keeb-span) + 1);
+				margin-left: var(--keeb-spacer);
+				top: var(--keeb-spacer);
+			}
+
+			&-octave-down {
+				grid-column: span calc((3 * var(--keeb-span)) + 2);
+			}
+
+			@at-root :is(&-octave, &-transpose-down) {
+				grid-row: 4;
+			}
+
+			@at-root :is(&-octave-up, &-transpose-down) {
+				order: 99;
+			}
+
+			@media (max-width: 767px) {
+				&-note {
+					&-white {
+						&:nth-child(1 of #{&}) {
+							grid-column: span calc((1 * var(--keeb-span)) + 1);
+						}
+					}
+
+					&-black {
+						&:nth-child(1 of #{&}) {
+							grid-column: span calc((2 * var(--keeb-span)) - 1);
+						}
+					}
+				}
+
+				&-ambience {
+					&:nth-child(1 of #{&}) {
+						grid-column: span calc((5 * var(--keeb-span)));
+					}
+				}
+
+				&-pedal {
+					&:nth-child(1 of #{&}) {
+						grid-column: span calc((5 * var(--keeb-span)) - 3);
+					}
+				}
+
+				&-transpose-up {
+					grid-row: 4;
+					grid-column: span calc((2 * var(--keeb-span)) + 2);
+				}
+
+				&-octave-down {
+					grid-column: span calc((9 * var(--keeb-span)));
+				}
+
+				@at-root :is(&-octave, &-transpose-down) {
+					grid-row: 5;
+				}
+			}
+		}
+	}
+}

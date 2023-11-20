@@ -1,0 +1,107 @@
+#loading {
+	transition: all linear 0.2s;
+	padding-bottom: 2rem;
+	align-items: stretch;
+}
+.loading-bar {
+	height: 5em;
+	width: 70.125em;
+	width: 100%;
+	// max-width: calc(100% - 0.125em);
+	max-width: 100%;
+	position: relative;
+	background: transparent;
+	// background: var(--c-noot-polar);
+	background-color: rgba(0, 0, 0, 0.2);
+	// font-size: min(10vw,1rem);
+	font-size: max(1vw, 1rem);
+	// border-bottom: 0.25em solid;
+	// border-top: .125em solid;
+	// border-left: .125em solid;
+	pointer-events: none;
+	align-self: stretch;
+	margin-bottom: 2em;
+	margin-inline: auto;
+	border-radius: 0.1em;
+
+	@media (max-width: 1179px) {
+		// width: 44.8em;
+	}
+
+	@media (max-width: 767px) {
+		// width: 16.8em;
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		display: block;
+		bottom: 0;
+		left: 0;
+		top: 0;
+		max-width: 100%;
+		width: calc((1em * var(--progress, 0)));
+		// width: calc(7em * var(--progress, 0) - 0.125em);
+		// background-color: var(--c-noot);
+		background-image: repeating-linear-gradient(
+				to right,
+				transparent 0,
+				transparent 0.5em,
+				var(--c-noot-polar) 0.5em,
+				var(--c-noot-polar) 1.25em,
+				transparent 1.25em,
+				transparent 1.5em,
+				var(--c-noot-polar) 1.5em,
+				var(--c-noot-polar) 2.25em,
+				transparent 2.25em,
+				transparent 3.5em,
+				var(--c-noot-polar) 3.5em,
+				var(--c-noot-polar) 4.25em,
+				transparent 4.25em,
+				transparent 4.5em,
+				var(--c-noot-polar) 4.5em,
+				var(--c-noot-polar) 5.25em,
+				transparent 5.25em,
+				transparent 5.5em,
+				var(--c-noot-polar) 5.5em,
+				var(--c-noot-polar) 6.25em,
+				transparent 6.25em,
+				transparent 7em
+			),
+			repeating-linear-gradient(
+				to right,
+				transparent 0,
+				transparent 0.875em,
+				var(--c-noot-polar) 0.875em,
+				var(--c-noot-polar) 1em
+			),
+			linear-gradient(
+				to bottom,
+				transparent 0%,
+				transparent calc(0% + 0.25em),
+				var(--c-noot-polar) calc(0% + 0.25em),
+				var(--c-noot-polar) calc(0% + 0.375em),
+				var(--c-noot) calc(0% + 0.375em),
+				var(--c-noot) 90%,
+				transparent 90%,
+				transparent calc(100% - 0.25em),
+				var(--c-noot-polar) calc(100% - 0.25em),
+				var(--c-noot-polar) 100%,
+				// transparent  100%,
+			);
+		background-position:
+			0 0.125em,
+			0 100%,
+			0 0;
+		background-repeat: repeat-x, repeat-x;
+		background-size:
+			auto 60%,
+			auto calc(100% - 0.375em),
+			auto 100%;
+		transition: width ease-in-out 0.1s;
+	}
+
+	& + .button {
+		margin-bottom: -3em;
+	}
+}

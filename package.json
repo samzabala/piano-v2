@@ -1,0 +1,36 @@
+{
+	"name": "piano-bitch-v2",
+	"description": "",
+	"private": true,
+	"version": "2.0.0",
+	"type": "module",
+	"scripts": {
+		"prettier": "prettier --write .",
+		"dev": "vite",
+		"build": "vite build"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-react": "^4.2.0",
+		"prettier": "^3.0.3",
+		"r3f-perf": "^7.1.2",
+		"react-markdown": "^9.0.1",
+		"rehype-raw": "^7.0.0",
+		"sass": "^1.69.5",
+		"vite": "^4.5.0",
+		"vite-plugin-glsl": "^1.1.2"
+	},
+	"dependencies": {
+		"@react-spring/three": "^9.7.3",
+		"@react-three/drei": "^9.88.11",
+		"@react-three/fiber": "^8.15.9",
+		"@react-three/postprocessing": "^2.15.10",
+		"@use-gesture/react": "^10.3.0",
+		"leva": "^0.9.35",
+		"postprocessing": "^6.33.3",
+		"react": "18.2",
+		"react-dom": "18.2",
+		"three": "^0.153.0",
+		"tone": "^14.7.77",
+		"zustand": "^4.4.6"
+	}
+}

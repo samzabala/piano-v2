@@ -1,0 +1,157 @@
+.Ui {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	max-width: 100%;
+	width: 100%;
+	height: 100%;
+	padding: 1rem;
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	gap: 1em;
+	pointer-events: none;
+	overflow-y: scroll;
+
+	.button {
+		font-size: 1.125em;
+	}
+
+	&-item {
+		pointer-events: auto;
+	}
+}
+
+.session-controls {
+	grid-template-columns: auto 1fr;
+	display: flex;
+	align-items: flex-end;
+	gap: 0.5em;
+	margin-bottom: auto;
+	max-width: 100%;
+
+	&,
+	&-form {
+		> :where(*) {
+			min-width: 0;
+		}
+	}
+
+	&-wrap {
+		flex: 1 1;
+	}
+
+	&-form {
+		// justify-content: center;
+	}
+
+	&-form {
+		display: grid;
+		display: flex;
+
+		> :where(*) {
+			flex: 0 0 auto;
+		}
+
+		&-control {
+		}
+
+		&-control-full {
+			width: 100%;
+			flex: 0 0 auto;
+		}
+	}
+
+	&-legend {
+		margin-inline: auto;
+		display: grid;
+		text-align: center;
+	}
+}
+
+.info {
+	position: relative;
+	margin-top: auto;
+
+	&-overlay {
+		z-index: -1;
+		--bg-opacity: 0.5;
+	}
+	&-contents {
+		position: absolute;
+		top: 2rem;
+		bottom: 2rem;
+		left: 0;
+		right: 0;
+		// bottom: 2rem;
+		margin: auto;
+		max-width: calc(100vw - 2rem);
+		width: 35em;
+		padding-inline: 3em;
+		height: 32em;
+		max-height: calc(100vh - max(4rem, 40vh));
+		overflow-y: scroll;
+		background: var(--c-light);
+		color: var(--c-dark);
+		border-radius: 0.5em;
+		border: 1px solid var(--c-not-as-dark);
+
+		@media (max-width: 767px) {
+			left: 5em;
+			max-width: calc(100vw - 6rem);
+			height: auto;
+			top: 1rem;
+			bottom: 1rem;
+			max-height: calc(100vh - 2rem);
+		}
+
+		&::before,
+		&::after {
+			content: '';
+			display: block;
+			height: 3em;
+			position: sticky;
+			left: 0;
+			right: 0;
+			margin-inline: -3em;
+			pointer-events: none;
+		}
+
+		&::before {
+			top: 0;
+			background: linear-gradient(
+				to bottom,
+				var(--c-light) 30%,
+				transparent 100%
+			);
+		}
+
+		&::after {
+			background: linear-gradient(to top, var(--c-light) 30%, transparent 100%);
+			bottom: 0;
+		}
+	}
+
+	&-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	&-utility {
+		font-size: 0.75em;
+		position: sticky;
+		right: 0em;
+		margin-right: -2rem;
+		margin-left: auto;
+		top: 1rem;
+		margin-top: -2rem;
+		text-align: right;
+		margin-bottom: -2em;
+	}
+}

@@ -1,0 +1,297 @@
+* {
+	&:where(
+			:not(
+					iframe,
+					canvas,
+					img,
+					svg,
+					video,
+					audio,
+					input,
+					textarea,
+					select,
+					option,
+					button,
+					table,
+					caption,
+					tbody,
+					tfoot,
+					thead,
+					tr,
+					th,
+					td
+				):not(svg *, symbol *)
+		) {
+		all: unset;
+		display: revert;
+	}
+
+	font: inherit;
+	line-height: 1;
+	margin: 0;
+	padding: 0;
+	border: 0;
+
+	&,
+	&::before,
+	&::after {
+		-webkit-backspace-visibility: hidden;
+
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+
+		// -webkit-font-smoothing: antialiased;
+		// -moz-osx-font-smoothing: grayscale;
+	}
+}
+
+:where(svg, img) {
+	max-width: 100%;
+	height: auto;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+*:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+:where(a) {
+	color: var(--c-primary);
+
+	&:is(:hover, :focus) {
+		text-decoration: underline;
+	}
+}
+
+html,
+body {
+	font-size: 100%;
+	font-family: var(--f-primary);
+	line-height: 1.75;
+	background: var(--c-noot);
+	accent-color: var(--c-primary);
+	scrollbar-width: thin;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	overflow: hidden;
+
+	// @media (min-width: 1920px) {
+	// 	font-size: calc(100vw * 16 / 1920);
+	// }
+
+
+	// @media (max-width: 359px) {
+	// 	font-size: 14px;
+	// }
+}
+
+select:not(:focus) option {
+	visibility: hidden;
+	display: none;
+}
+
+:where(code, pre, var) {
+	font-family: var(--f-monospace);
+	padding: 0.25em;
+	background: var(--c-noot);
+	color: var(--c-noot-polar);
+	border-radius: 0.25rem;
+
+	& & {
+		background: none;
+		padding: 0;
+	}
+}
+
+:where(pre) {
+	white-space: pre;
+	display: block;
+	max-width: 100%;
+	line-height: 1.5;
+	overflow: auto;
+}
+
+::-webkit-scrollbar {
+	width: 0.5rem;
+
+	&-track {
+		background: transparent;
+	}
+
+	/* Handle */
+	&-thumb {
+		background: var(--c-primary);
+		border-radius: 0.5em;
+		cursor: grab;
+
+		&:active {
+			cursor: grabbing;
+		}
+		&:hover {
+			background: var(--c-primary-polar);
+		}
+	}
+	&-track-piece {
+		margin-block: 0.1rem;
+	}
+}
+
+canvas {
+	touch-action: none !important;
+	z-index: 0 !important;
+}
+
+#root {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	// z-index: 0;
+}
+
+small,
+*.small,
+sup,
+sub {
+	font-size: 0.75em;
+}
+
+big {
+	font-size: 1.25em;
+}
+
+a {
+	text-decoration: none;
+	color: var(--c-primary);
+	transition: color 0.25s ease-in-out;
+
+	&:is(:hover, :focus) {
+		text-decoration: underline;
+	}
+}
+:is(h1, h2, h3, h4, h5, h6) {
+	line-height: calc(1em + 0.25rem);
+	color: var(--c-not-as-dark);
+	margin-bottom: 0.75em;
+	font-weight: bolder;
+
+	&:nth-child(n + 2) {
+		margin-top: calc(0.5em + 1rem);
+	}
+
+	a:not(:hover):not(:focus) {
+		color: inherit;
+		font-weight: inherit;
+		text-decoration: underline;
+	}
+}
+
+:is(h4, h5, h6, cite) {
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-weight: 800;
+}
+h1 {
+	font-size: 2em;
+	color: var(--c-dark);
+}
+
+h2 {
+	font-size: 1.75em;
+}
+
+h3 {
+	font-size: 1.5em;
+}
+
+h4 {
+	font-size: 1em;
+}
+
+h5 {
+	font-size: 0.875em;
+}
+
+h6 {
+	font-size: 0.75em;
+}
+
+:is(p, ol, ul, blockquote + cite, pre) {
+	margin-bottom: 0.75rem;
+}
+
+li {
+	margin-top: 0.75em;
+	list-style: inherit;
+	padding-left: 1em;
+
+	&::marker {
+		color: var(--c-secondary);
+		font-weight: 900;
+	}
+}
+
+:is(ol, ul) {
+	list-style: revert;
+	padding-left: 0.75em;
+}
+
+blockquote {
+	font-family: var(--f-secondary);
+	font-size: 2.875em;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	line-height: calc(1em + 0.5rem);
+	opacity: 0.5;
+	font-weight: 900;
+	color: var(--c-fg-alt);
+	max-width: 21ch;
+	align-self: center;
+
+	&:after {
+		content: '';
+		margin: 1.875rem auto 0;
+	}
+
+	+ cite {
+		text-align: center;
+		display: block;
+		margin-bottom: 4rem;
+		margin-top: -2rem;
+	}
+}
+hr {
+	margin: 2em 0;
+	width: 10em;
+	border: 0;
+	border-top: 0.125em solid var(--c-primary);
+	max-width: 100%;
+}
+
+:where(em, i, var) {
+	font-style: italic;
+}
+
+:where(b, strong) {
+	font-weight: bolder;
+}
+
+:where(input) {
+	&:is([type='range'], [type='checkbox'], [type='radio']) {
+		height: 1em;
+		min-width: 1em;
+	}
+	&:is([type='range']) {
+		min-width: 10ch;
+	}
+}
