@@ -37,7 +37,6 @@ export default function Sounds() {
 	const isDemoing = usePlay((state) => state.isDemoing)
 	const liveDemo = usePlay((state) => state.liveDemo)
 	const dieDemo = usePlay((state) => state.dieDemo)
-	const swapDemo = usePlay((state) => state.swapDemo)
 
 	const metronomeSeed = usePlay((state) => state.metronomeSeed)
 
@@ -430,7 +429,7 @@ export default function Sounds() {
 
 				// catch end
 				Tone.Transport.scheduleOnce((t) => {
-					swapDemo()
+					liveDemo(true)
 				}, trackEnd + 'i')
 				//control changes
 

@@ -74,8 +74,13 @@
 }
 
 .info {
+	--info-padding: 3rem;
 	position: relative;
 	margin-top: auto;
+
+	@media (max-width: 767px) {
+		--info-padding: 1.5rem;
+	}
 
 	&-overlay {
 		z-index: -1;
@@ -91,7 +96,7 @@
 		margin: auto;
 		max-width: calc(100vw - 2rem);
 		width: 35em;
-		padding-inline: 3em;
+		padding-inline: var(--info-padding);
 		height: 32em;
 		max-height: calc(100vh - max(4rem, 40vh));
 		overflow-y: scroll;
@@ -100,24 +105,14 @@
 		border-radius: 0.5em;
 		border: 1px solid var(--c-not-as-dark);
 
-		@media (max-width: 767px) {
-			left: 5em;
-			max-width: calc(100vw - 6rem);
-			height: auto;
-			top: 1rem;
-			bottom: 1rem;
-			max-height: calc(100vh - 2rem);
-		}
-
 		&::before,
 		&::after {
 			content: '';
 			display: block;
-			height: 3em;
+			height: var(--info-padding);
 			position: sticky;
-			left: 0;
-			right: 0;
-			margin-inline: -3em;
+			left: calc(var(--info-padding) * -1);
+			right: calc(var(--info-padding) * -1);
 			pointer-events: none;
 		}
 
@@ -133,6 +128,15 @@
 		&::after {
 			background: linear-gradient(to top, var(--c-light) 30%, transparent 100%);
 			bottom: 0;
+		}
+
+		@media (max-width: 767px) {
+			left: 5em;
+			max-width: calc(100vw - 6rem);
+			height: auto;
+			top: 1rem;
+			bottom: 1rem;
+			max-height: calc(100vh - 2rem);
 		}
 	}
 

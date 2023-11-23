@@ -16,10 +16,14 @@
 	pointer-events: none;
 
 	@media (max-width: 767px) {
-		font-size: min(20px, calc(1.7vw - 0.05rem), 2.5vh);
-		// top: min(7rem, 18vw, 25vh);
-		left: auto;
+		font-size: min(20px,1.5vw - .05rem,2.5vh);
+		// left: auto;
 		// right: 3em;
+	}
+
+	@media (max-width: 767px) and (max-height: 360px) {
+		left: auto;
+		right: 3em;
 	}
 
 	&-keys {

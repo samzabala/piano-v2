@@ -38,8 +38,6 @@ You can also hook up a MIDI keyboard and see what effects, faders, controllers, 
 
 And if you are a normal person with a normal keyboard, boop your keebs to see which keys do stuff.
 
-<a href="https://github.com/samzabala/piano-v2" target="_blank">Github</a> | <a href="https://samzabala.space/miniprojects/three/" target="_blank">Legacy</a>
-
 <hr />
 
 <small>
@@ -91,8 +89,16 @@ Environment Maps from <a href='https://polyhaven.com/' target='_blank'>polyhaven
 
 From our lorde and el salvador <a href='https://https://fonts.google.com/icons/' target='_blank'>google.com</a>
 
-#### Ay wow skinroll mo? Congratulations
-
-La akong papremyo tho. Sige alis na. bye.
-
 </div>
+
+
+# Version Log
+
+
+2.0.1
+- i clean up shits
+- the fuckin html is still panicking on lerpy derpy mode tho.
+- ass
+
+2.0
+- It born

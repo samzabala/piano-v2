@@ -459,6 +459,9 @@ export default function Ui() {
 									children={theAbout}
 								/>
 								<hr />
+
+								<a href="https://github.com/samzabala/piano-v2" target="_blank">Github</a> | <a href="https://samzabala.space/miniprojects/three/" target="_blank">Legacy</a>
+								
 								<h6 class="mine-bitch">
 									built by <a href="http://samzabala.com" target="_blank">Sam Zabala</a>.
 								</h6>

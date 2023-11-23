@@ -35,6 +35,7 @@ export default function Model({
 	const keebOctave = usePlay((state) => state.keebOctave)
 	const hasKeebsMap = usePlay((state) => state.hasKeebsMap)
 
+	const isDemoing = usePlay((state) => state.isDemoing)
 	const playingDemo = usePlay((state) => state.playingDemo)
 
 	const isAmbiencing = usePlay((state) => state.isAmbiencing)
@@ -171,11 +172,17 @@ export default function Model({
 	}
 
 	useFrame(() => {
+		
 		if (kInsW.current && instancesKFarW && kInsB.current && instancesKFarB) {
 			updateInstancesAppearance(kInsW, instancesKFarW, countWhite)
 			updateInstancesAppearance(kInsB, instancesKFarB, countBlack)
 		}
-	}, [playing, playingDemo, keebOctave, hasKeebsMap])
+	}, [
+		playing,
+		playingDemo,
+		keebOctave,
+		// hasKeebsMap // todo maybe
+	])
 
 	//update music related data
 	const updateInstancesMeta = (ref, ins, c) => {

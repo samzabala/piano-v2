@@ -54,7 +54,6 @@ export default function Keebs() {
 	const playingDemo = usePlay((state) => state.playingDemo)
 	const liveDemo = usePlay((state) => state.liveDemo)
 	const dieDemo = usePlay((state) => state.dieDemo)
-	const swapDemo = usePlay((state) => state.swapDemo)
 
 	const metronomeSeed = usePlay((state) => state.metronomeSeed)
 	const liveMetronome = usePlay((state) => state.liveMetronome)
@@ -133,11 +132,7 @@ export default function Keebs() {
 			(keebPressed) => {
 				if (canKeeb) {
 					if (keebPressed) {
-						if (!isDemoing) {
-							liveDemo()
-						} else {
-							swapDemo()
-						}
+						liveDemo()
 
 						dieDemoTimeout.current = setTimeout(() => {
 							dieDemo(0)

@@ -30,7 +30,6 @@ export default function Model({ materialProps }) {
 	const isDemoing = usePlay((state) => state.isDemoing)
 	const liveDemo = usePlay((state) => state.liveDemo)
 	const dieDemo = usePlay((state) => state.dieDemo)
-	const swapDemo = usePlay((state) => state.swapDemo)
 
 	// const ambience = usePlay((state) => state.ambience)
 	const toggleAmbienceInProgress = usePlay((state) => state.toggleAmbienceInProgress)
@@ -172,7 +171,6 @@ export default function Model({ materialProps }) {
 		if (focusOn == 'tactile' && e.object) {
 			e.stopPropagation()
 			if (voice !== e.object.voiceKey) {
-				// dieDemo() //kill any running demos or ur app dies
 				updateVoice(e.object.voiceKey)
 			}
 		}
@@ -187,11 +185,7 @@ export default function Model({ materialProps }) {
 			e.stopPropagation()
 
 			if (!demoWasKilled) {
-				if (!isDemoing) {
-					liveDemo()
-				} else {
-					swapDemo()
-				}
+				liveDemo()
 			}
 			setDemoWasKilled(false)
 		}

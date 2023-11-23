@@ -265,7 +265,6 @@ export default create(
 					} else {
 						newKeebOctave = _newKeebOctave
 					}
-					console.log(_newKeebOctave, newKeebOctave)
 
 					if (newKeebOctave !== state.keebOctave) {
 						return { keebOctave: newKeebOctave }
@@ -319,13 +318,14 @@ export default create(
 				})
 			},
 
-			//todo merge with live
 			// duh
-			swapDemo: () => {
+			liveDemo: () => {
 				set((state) => {
 					if (!state.ready) return {}
+					
 
 					const toReturn = {
+						isDemoing: true,
 						playingDemo: [],
 						playing: [],
 						soften: 0,
@@ -335,35 +335,15 @@ export default create(
 						timeSignature: [4, 4],
 					}
 
-					if (state.isDemoing) {
+					// only allow swap if it was already running
+					if(state.isDemoing) {
+
 						if (state.demo >= demoProps.length - 1) {
 							toReturn.isDemoing = false
 							toReturn.demo = 0
 						} else {
 							toReturn.demo = state.demo + 1
 						}
-
-						if (state.metronomeSeed > 0) {
-							toReturn.metronomeSeed = Math.random() + 0.1
-						}
-					}
-
-					return toReturn
-				})
-			},
-
-			// duh
-			liveDemo: () => {
-				set((state) => {
-					if (!state.ready) return {}
-
-					const toReturn = {
-						isDemoing: true,
-						playingDemo: [],
-						playing: [],
-						soften: 0,
-						sostenuto: 0,
-						sustain: 0,
 					}
 
 					if (state.metronomeSeed > 0) {
@@ -378,7 +358,7 @@ export default create(
 			dieDemo: (newDemo) => {
 				set((state) => {
 					if (!state.ready) return {}
-
+					
 					const toReturn = {
 						isDemoing: false,
 						playingDemo: [],
@@ -547,8 +527,8 @@ export default create(
 			// adSR MOTHERFUCKAAAA
 			attack: (midiCode, velocity = 1, toDemo = false) => {
 				set((state) => {
-					if (!state.ready) return {}
-
+					if (!state.ready || (toDemo && !state.isDemoing)) return {}
+					
 					const toReturn = {}
 					const affect = toDemo ? 'playingDemo' : 'playing'
 
@@ -581,6 +561,7 @@ export default create(
 			release: (midiCode, toDemo = false) => {
 				set((state) => {
 					if (!state.ready) return {}
+
 
 					const affect = toDemo ? 'playingDemo' : 'playing'
 

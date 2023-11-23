@@ -3,7 +3,7 @@ import { Suspense, useMemo } from 'react'
 import { useTexture } from '@react-three/drei'
 
 const ROUGHNESS = 1
-const METALNESS = 0.8
+const METALNESS = .9
 const EMISSIVE = '#b6e5ff'
 const COLOR_ACTIVE = '#0084ff'
 const ENV_MAP_INTENSITY_DEFAULT = {
