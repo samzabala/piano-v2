@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react'
 import glsl from 'vite-plugin-glsl'
+import eslint from 'vite-plugin-eslint'
 import { readFileSync } from 'fs'
 
 const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env
@@ -21,6 +22,9 @@ export default {
 			},
 		},
 		glsl(),
+		eslint({
+			include: [/\.jsx$/, /\.js$/],
+		}),
 	],
 	root: './src',
 	publicDir: './../assets/',

@@ -134,7 +134,6 @@ export default function Control() {
 
 								//invert expression
 								if (midiCode == midiControlCode.expression) {
-									const oldVelocity = velocity
 									// Map the velocity from the range [25, 127] to [0, 127]
 									velocity = Math.floor(
 										(velocity - 25) *
@@ -167,14 +166,6 @@ export default function Control() {
 		}
 	}
 
-	const handleChange = (e) => {
-		// if(e.port.state === 'disconnected') {
-		// 	// setMidiInputs([])
-		// } else {
-		// 	console.log(e.port.state) // i mean it says connected???
-		// }
-	}
-
 	// bless
 	useMemo(() => {
 		if (navigator.requestMIDIAccess) {
@@ -197,7 +188,7 @@ export default function Control() {
 	const midiEventHandlers = useRef([])
 	useEffect(() => {
 		if (midiInputs) {
-			midiInputs.forEach((input, i) => {
+			midiInputs.forEach((input) => {
 				// https://www.smashingmagazine.com/2018/03/web-midi-api/
 				// humanda kayong lahat makapanyarihan na ako mwahahahaha
 				// also tenkyu smashing boi
@@ -207,7 +198,7 @@ export default function Control() {
 						.length
 				) {
 					input.onmidimessage = handleMessage
-					input.onstatechange = handleChange
+
 					midiEventHandlers.current.push({
 						input,
 						id: input.id,
@@ -242,7 +233,7 @@ export default function Control() {
 							midiInputs && midiInputs.size ? '' : 'disabled'
 						}`}
 					>
-						{Object.keys(CC).map((meta, i) => {
+						{Object.keys(CC).map((meta) => {
 							// console.log(meta,CC[meta])
 							const props = {
 								key: meta,

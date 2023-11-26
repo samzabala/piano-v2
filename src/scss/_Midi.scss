@@ -185,8 +185,9 @@
 		margin: auto;
 		background: var(--c-noot-polar);
 		color: var(--c-noot);
-		display: flex;
-		align-items: center;
+		// display: flex;
+		// align-items: center;
+		// flex-direction: column;
 		max-height: max-content;
 		max-width: max-content;
 		padding: 0.75em 1.25em;

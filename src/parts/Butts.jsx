@@ -62,7 +62,7 @@ export default function Model({ materialProps }) {
 					// console.log('dragging')
 				}
 			},
-			onDragEnd: ({ offset: [ox] }) => {
+			onDragEnd: () => {
 				toggleAmbienceInProgress(false)
 				document.body.style.cursor = 'default'
 

@@ -11,14 +11,13 @@ import * as ItsOverIsntIt from './midi/itsoverisntit.json'
 
 // the bbs
 export const demoProps = [
-	
 	// tests polyphony + midi controller changes, chaddiest midi events
 	{
 		name: 'Teen Titans Theme Song',
 		tag: 'TT',
 		midi: TeenTitans,
 	},
-	
+
 	// tests chaddiest midi controller changes
 	{
 		name: 'This Beautiful Cruel World',

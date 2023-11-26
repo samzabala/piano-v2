@@ -49,7 +49,6 @@ export default function Keebs() {
 	const voice = usePlay((state) => state.voice)
 	const updateVoice = usePlay((state) => state.updateVoice)
 
-	const demo = usePlay((state) => state.demo)
 	const isDemoing = usePlay((state) => state.isDemoing)
 	const playingDemo = usePlay((state) => state.playingDemo)
 	const liveDemo = usePlay((state) => state.liveDemo)
@@ -87,7 +86,7 @@ export default function Keebs() {
 		const keebMidi = []
 		const octaveOffset = (keebOctave + octaveCodeOffset - 1) * notesLength
 
-		keebControl.notes.map(({ keycode, char }, i) => {
+		keebControl.notes.map((control, i) => {
 			keebMidi.push(octaveOffset + i)
 		})
 
@@ -288,7 +287,7 @@ export default function Keebs() {
 			{controlsMapOn == 'keebs' ? (
 				<div className='keebMap add-underlay'>
 					<div className='keebMap-keys'>
-						{keebControl.notes.map(({ keycode, char }, i) => {
+						{keebControl.notes.map(({ char }, i) => {
 							return (
 								<Keeb
 									key={i}
@@ -329,7 +328,7 @@ export default function Keebs() {
 						/>
 
 						{/* kwan boses */}
-						{keebControl.voices.map(({ keycode, char }, i) => {
+						{keebControl.voices.map(({ char }, i) => {
 							return (
 								<Keeb
 									key={i}

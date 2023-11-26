@@ -1,6 +1,5 @@
 import './style.scss'
-import * as THREE from 'three'
-import { Suspense } from 'react'
+// import { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
 import { KeyboardControls } from '@react-three/drei'

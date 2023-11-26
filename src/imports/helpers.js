@@ -8,15 +8,6 @@ export const handleCursorRevert = (e) => {
 	e.stopPropagation()
 	document.body.style.cursor = 'default'
 }
-
-export const handleFocusTactile = (e) => {
-	e.stopPropagation()
-
-	if (focusOn !== 'tactile') {
-		setFocus('tactile')
-	}
-}
-
 // note stuff
 export const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 export const notesF = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
@@ -52,8 +43,6 @@ export const noteInRange = (
 	midiCode,
 	{ octaves = 1, octaveCodeOffset = 0, startNote = 'C', endNote = 'B' }
 ) => {
-	const octave = Math.floor(midiCode / notesLength) - octaveCodeOffset + 1
-
 	const startMidi = notes.indexOf(startNote) + notesLength * octaveCodeOffset
 	const endMidi =
 		notes.indexOf(endNote) + notesLength * (octaves - 1 + octaveCodeOffset)

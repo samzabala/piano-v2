@@ -3,10 +3,10 @@ import { subscribeWithSelector } from 'zustand/middleware'
 
 import { voicesProps } from './../imports/audio'
 import { demoProps } from './../imports/demo'
+import keebControl from '../imports/keebControl'
 
 import {
 	notesLength,
-	notesF,
 	noteDurations,
 	volumeRange,
 	noteInRange,
@@ -113,7 +113,7 @@ export default create(
 			playing: [],
 
 			start: () => {
-				set((state) => {
+				set(() => {
 					return { ready: true }
 				})
 			},
@@ -220,7 +220,7 @@ export default create(
 			},
 
 			updateMidiControl: (newMidiControl) => {
-				set((state) => {
+				set(() => {
 					if (!newMidiControl) {
 						return { midiControl: 0 }
 					} else {
@@ -230,7 +230,7 @@ export default create(
 			},
 
 			setMidiInputs: (newInputs) => {
-				set((state) => {
+				set(() => {
 					if (!newInputs) {
 						return { midiInputs: null }
 					} else {
@@ -241,12 +241,14 @@ export default create(
 
 			enableKeebs: () => {
 				set((state) => {
+					if (!state.ready) return {}
 					return { canKeeb: true }
 				})
 			},
 
 			disableKeebs: () => {
 				set((state) => {
+					if (!state.ready) return {}
 					return { canKeeb: false }
 				})
 			},
@@ -259,15 +261,23 @@ export default create(
 					let newKeebOctave
 
 					if (_newKeebOctave < 1 || !_newKeebOctave) {
-						newKeebOctave = 1
-					} else if (_newKeebOctave > state.octaves) {
-						newKeebOctave = state.octaves
+						newKeebOctave = Math.floor(
+							keebControl.notes.length / notesLength
+						)
+					} else if (
+						_newKeebOctave >=
+						state.octaves -
+							Math.floor(keebControl.notes.length / notesLength)
+					) {
+						newKeebOctave =
+							state.octaves -
+							Math.floor(keebControl.notes.length / notesLength)
 					} else {
 						newKeebOctave = _newKeebOctave
 					}
 
-					if (newKeebOctave !== state.keebOctave) {
-						return { keebOctave: newKeebOctave }
+					if (newKeebOctave) {
+						return { keebOctave: newKeebOctave, playing: [] }
 					} else {
 						return {}
 					}
@@ -322,7 +332,6 @@ export default create(
 			liveDemo: () => {
 				set((state) => {
 					if (!state.ready) return {}
-					
 
 					const toReturn = {
 						isDemoing: true,
@@ -336,8 +345,7 @@ export default create(
 					}
 
 					// only allow swap if it was already running
-					if(state.isDemoing) {
-
+					if (state.isDemoing) {
 						if (state.demo >= demoProps.length - 1) {
 							toReturn.isDemoing = false
 							toReturn.demo = 0
@@ -358,7 +366,7 @@ export default create(
 			dieDemo: (newDemo) => {
 				set((state) => {
 					if (!state.ready) return {}
-					
+
 					const toReturn = {
 						isDemoing: false,
 						playingDemo: [],
@@ -384,7 +392,7 @@ export default create(
 
 			// duh
 			setSamplerReady(value) {
-				set((state) => {
+				set(() => {
 					// console.log('setting sampleReady',value)
 					return { samplerReady: value }
 				})
@@ -528,7 +536,7 @@ export default create(
 			attack: (midiCode, velocity = 1, toDemo = false) => {
 				set((state) => {
 					if (!state.ready || (toDemo && !state.isDemoing)) return {}
-					
+
 					const toReturn = {}
 					const affect = toDemo ? 'playingDemo' : 'playing'
 
@@ -552,7 +560,6 @@ export default create(
 							}
 						}
 					}
-
 					return toReturn
 				})
 			},
@@ -561,7 +568,6 @@ export default create(
 			release: (midiCode, toDemo = false) => {
 				set((state) => {
 					if (!state.ready) return {}
-
 
 					const affect = toDemo ? 'playingDemo' : 'playing'
 
@@ -580,7 +586,7 @@ export default create(
 						const i = state[affect].findIndex(([m]) => m == midiCode)
 						if (i !== -1) {
 							toReturn[affect] = [
-								...state[affect].filter(([m, v]) => m !== midiCode),
+								...state[affect].filter(([m]) => m !== midiCode),
 							]
 						}
 					}

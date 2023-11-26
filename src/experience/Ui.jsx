@@ -18,9 +18,9 @@ import LoadingSpinner from '../parts/LoadingSpinner.jsx'
 import LoadingBar from '../parts/LoadingBar.jsx'
 
 import {
-	noteDurations,
+	// noteDurations,
 	volumeRange,
-	timeSignatureBeatRange,
+	// timeSignatureBeatRange,
 	bpmRange,
 } from '../imports/helpers'
 
@@ -54,6 +54,7 @@ export default function Ui() {
 	const [showTransports, setShowTransports] = useState(false)
 
 	const [showAbout, setShowAbout] = useState(false)
+
 	const theAbout = useMemo(() => {
 		const match = readme.match(/<div\s+id="about">([\s\S]*?)<\/div>/)
 		return match ? match[1].trim() : ''
@@ -456,14 +457,35 @@ export default function Ui() {
 								<ReactMarkdown
 									rehypePlugins={[rehypeRaw]}
 									skipHtml={false}
-									children={theAbout}
-								/>
+								>
+									{theAbout}
+								</ReactMarkdown>
 								<hr />
-
-								<a href="https://github.com/samzabala/piano-v2" target="_blank">Github</a> | <a href="https://samzabala.space/miniprojects/three/" target="_blank">Legacy</a>
-								
-								<h6 class="mine-bitch">
-									built by <a href="http://samzabala.com" target="_blank">Sam Zabala</a>.
+								<a
+									href='https://github.com/samzabala/piano-v2'
+									target='_blank'
+									rel='noreferrer'
+								>
+									Github
+								</a>{' '}
+								|{' '}
+								<a
+									href='https://samzabala.space/miniprojects/three/'
+									target='_blank'
+									rel='noreferrer'
+								>
+									Legacy
+								</a>
+								<h6 className='mine-bitch'>
+									built by{' '}
+									<a
+										href='http://samzabala.com'
+										target='_blank'
+										rel='noreferrer'
+									>
+										Sam Zabala
+									</a>
+									.
 								</h6>
 							</div>
 						</div>

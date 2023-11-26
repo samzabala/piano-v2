@@ -2,8 +2,9 @@
 Keys: Hayup nihaw oh also it visualizes how u do and what the boopies... words
 */
 import * as THREE from 'three'
-import React, { useRef, useEffect, useMemo } from 'react'
+import { useRef, useEffect, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
+// import { Outlines } from '@react-three/drei' //bitch doesnt work. yEET
 
 import usePlay from '../stores/usePlay'
 import {
@@ -16,7 +17,7 @@ import {
 } from '../imports/helpers'
 
 import { getPrimitiveNodes } from './../imports/model.jsx'
-import { SharedMaterial } from './../imports/materials.jsx'
+import { SharedMaterial, HighlightMaterial } from './../imports/materials.jsx'
 
 export default function Model({
 	octaves = 1,
@@ -25,7 +26,8 @@ export default function Model({
 	endNote = 'B',
 	objProps,
 	materialProps,
-	listen = true,
+	color = '',
+	mode = 'interactive', //highlight,debug
 }) {
 	//states n helpers
 	const transpose = usePlay((state) => state.transpose)
@@ -33,9 +35,8 @@ export default function Model({
 	const focusOn = usePlay((state) => state.focusOn)
 
 	const keebOctave = usePlay((state) => state.keebOctave)
-	const hasKeebsMap = usePlay((state) => state.hasKeebsMap)
+	// const hasKeebsMap = usePlay((state) => state.hasKeebsMap)
 
-	const isDemoing = usePlay((state) => state.isDemoing)
 	const playingDemo = usePlay((state) => state.playingDemo)
 
 	const isAmbiencing = usePlay((state) => state.isAmbiencing)
@@ -60,8 +61,8 @@ export default function Model({
 	const bOff = -0.32
 	const octaveposOff = -2.24
 
-	const start = notes.indexOf(startNote)
-	const end = notes.indexOf(endNote)
+	const start = useMemo(() => notes.indexOf(startNote), [startNote])
+	const end = useMemo(() => notes.indexOf(endNote), [endNote])
 	const [count, countWhite, countBlack] = useMemo(() => {
 		const count = octaves * notesLength - start - (notesLength - end - 1)
 		let countWhite = 0
@@ -74,17 +75,17 @@ export default function Model({
 		const countBlack = count - countWhite
 
 		return [count, countWhite, countBlack]
-	}, [])
+	}, [start, end, octaves])
 
 	const keysGroup = useRef() //si grupo kang component mismo
 	const kEachAll = Array(count).fill(useRef()) // gabos
-	const kInsW = useRef() // i have to separate because three js be low key racist
-	const kInsB = useRef() // ooo waw
+	const theWB = useRef() // i have to separate because three js be low key racist
+	const theBK = useRef() // ooo waw
 
-	const [kListeners, instancesKFarW, instancesKFarB] = useMemo(() => {
+	const [kListeners, instancesWK, instancesBK] = useMemo(() => {
 		const kListeners = []
-		const instancesKFarW = []
-		const instancesKFarB = []
+		const instancesWK = []
+		const instancesBK = []
 
 		// factors of how far u kwan usog usog... basta in english yung galawin mong unti para kyut tingnan yung piano basta usog mo gagi
 
@@ -134,17 +135,19 @@ export default function Model({
 				}
 
 				if (canWhite) {
-					instancesKFarW.push(toPush)
+					instancesWK.push(toPush)
 				} else {
-					instancesKFarB.push(toPush)
+					instancesBK.push(toPush)
 				}
 
 				kListeners.push(toPush)
 			}
 		}
 
-		return [kListeners, instancesKFarW, instancesKFarB]
-	}, [])
+		// console.log(kListeners, instancesWK, instancesBK)
+
+		return [kListeners, instancesWK, instancesBK]
+	}, [octaves, octaveCodeOffset, start, end])
 
 	// kwan in english make it look like it booped
 	const dummyT = useMemo(() => new THREE.Object3D(), [])
@@ -172,10 +175,9 @@ export default function Model({
 	}
 
 	useFrame(() => {
-		
-		if (kInsW.current && instancesKFarW && kInsB.current && instancesKFarB) {
-			updateInstancesAppearance(kInsW, instancesKFarW, countWhite)
-			updateInstancesAppearance(kInsB, instancesKFarB, countBlack)
+		if (theWB.current && instancesWK && theBK.current && instancesBK) {
+			updateInstancesAppearance(theWB, instancesWK, countWhite)
+			updateInstancesAppearance(theBK, instancesBK, countBlack)
 		}
 	}, [
 		playing,
@@ -198,13 +200,19 @@ export default function Model({
 			}
 		}
 	}
-
 	useEffect(() => {
-		if (kInsW.current && instancesKFarW && kInsB.current && instancesKFarB) {
-			updateInstancesMeta(kInsW, instancesKFarW, countWhite)
-			updateInstancesMeta(kInsB, instancesKFarB, countBlack)
+		if (theWB.current && instancesWK && theBK.current && instancesBK) {
+			updateInstancesMeta(theWB, instancesWK, countWhite)
+			updateInstancesMeta(theBK, instancesBK, countBlack)
 		}
-	}, [transpose, kInsW, instancesKFarW, kInsB, instancesKFarB])
+
+		// return () => {
+		// 	if ( instancesWK && instancesBK) {
+		// 		instancesWK.geometry && instancesWK.geometry.dispose()
+		// 		instancesBK.material && instancesBK.material.dispose()
+		// 	}
+		// }
+	}, [transpose, theWB, instancesWK, theBK, instancesBK])
 
 	//listeners
 	const handleNoteAttack = (e) => {
@@ -258,28 +266,38 @@ export default function Model({
 	return (
 		<>
 			<group {...objProps} ref={keysGroup} dispose={null}>
-				<instancedMesh
-					args={[nodes.White.geometry, null, countWhite]}
-					instances={instancesKFarW}
-					ref={kInsW}
-					// castShadow
-					receiveShadow
-					frustumCulled={false}
-				>
-					<SharedMaterial {...materialProps} />
-				</instancedMesh>
-				<instancedMesh
-					args={[nodes.Black.geometry, null, countBlack]}
-					instances={instancesKFarB}
-					ref={kInsB}
-					receiveShadow
-					// castShadow
-					frustumCulled={false}
-				>
-					<SharedMaterial {...materialProps} />
-				</instancedMesh>
+				<group>
+					<instancedMesh
+						args={[nodes.White.geometry, null, countWhite]}
+						instances={instancesWK}
+						ref={theWB}
+						// castShadow
+						receiveShadow={mode !== 'highlight'}
+						frustumCulled={false}
+					>
+						{mode == 'highlight' ? (
+							<HighlightMaterial {...materialProps} color={color} />
+						) : (
+							<SharedMaterial {...materialProps} />
+						)}
+					</instancedMesh>
+					<instancedMesh
+						args={[nodes.Black.geometry, null, countBlack]}
+						instances={instancesBK}
+						ref={theBK}
+						receiveShadow={mode !== 'highlight'}
+						// castShadow
+						frustumCulled={false}
+					>
+						{mode == 'highlight' ? (
+							<HighlightMaterial {...materialProps} color={color} />
+						) : (
+							<SharedMaterial {...materialProps} />
+						)}
+					</instancedMesh>
+				</group>
 
-				{listen &&
+				{mode == 'interactive' &&
 					kListeners.map((ins, i) => {
 						const { key, midiCode, noteName, position } = ins
 
@@ -302,7 +320,7 @@ export default function Model({
 								// rotation-x={getKeyPressAngle(midiCode, noteName)}
 								position-x={position[0]}
 							>
-								<SharedMaterial {...materialProps} />
+								{/* <SharedMaterial {...materialProps} /> */}
 							</mesh>
 						)
 					})}

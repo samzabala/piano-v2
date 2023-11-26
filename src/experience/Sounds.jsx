@@ -47,7 +47,7 @@ export default function Sounds() {
 	const updateSoften = usePlay((state) => state.updateSoften)
 
 	// const sostenuto = usePlay((state) => state.sostenuto)
-	const updateSostenuto = usePlay((state) => state.updateSostenuto)
+	// const updateSostenuto = usePlay((state) => state.updateSostenuto)
 
 	const sustain = usePlay((state) => state.sustain)
 	const updateSustain = usePlay((state) => state.updateSustain)
@@ -65,7 +65,7 @@ export default function Sounds() {
 
 	// the pingpingping and eternal screams of my child
 	const liveSampler = useRef()
-	const demoVoices = useRef()
+
 	const demoParts = useRef()
 
 	// and then inserts or plugins or effects but in the music terms because programmers are gonna think of different things from this because they are robots. oh god am i a robot? no im cyborg from teen titans. im like half robot half mental problems  ...myess
@@ -85,7 +85,12 @@ export default function Sounds() {
 
 	const [voiceAlreadyLoaded, setToneAlreadyLoaded] = useState([0])
 
-	const createSamplerInstance = (voice, cb = (r) => {}) => {
+	const createSamplerInstance = (
+		voice,
+		cb = (r) => {
+			r
+		}
+	) => {
 		let toReturn
 
 		if (!voiceAlreadyLoaded.includes(voice)) {
@@ -116,8 +121,6 @@ export default function Sounds() {
 		return toReturn
 	}
 
-	const [theContext, setTheContext] = useState(null)
-
 	//init tone shenanigans
 	useMemo(() => {
 		// Tone.setContext( new Tone.Context({ latencyHint: 'playback' }) ) // so this was a lie
@@ -137,7 +140,6 @@ export default function Sounds() {
 			})
 		}, '4n')
 
-		demoVoices.current = []
 		demoParts.current = []
 
 		// // transposeEE
@@ -228,7 +230,7 @@ export default function Sounds() {
 			Tone.Destination.set({
 				volume:
 					// offset ear damage a bit so everyone's ears and hearts are happy. please dont take it off i already tried and i got jumpscared. 666/10 would not recommend huhuhuhu
-					volume - 0.5
+					volume - 0.5,
 			})
 		}
 	}, [volume])
@@ -236,7 +238,8 @@ export default function Sounds() {
 	useEffect(() => {
 		if (liveSampler.current) {
 			liveSampler.current.set({
-				volume: 0 +
+				volume:
+					0 +
 					-10 * soften + // 0.1
 					-1.5 * ambience, // to do move for piano only
 			})
@@ -256,7 +259,6 @@ export default function Sounds() {
 				if (!isDemoing) {
 					Tone.Transport.start()
 				}
-			} else {
 			}
 		}
 	}, [metronomeSeed, bpm])
@@ -381,14 +383,7 @@ export default function Sounds() {
 			for (let i = 0; i < demoParts.current.length; i++) {
 				demoParts.current[i].stop()
 			}
-			demoParts.current = []
 
-			//dispose the synth and make a new one
-
-			for (let i = 0; i < demoVoices.current.length; i++) {
-				demoVoices.current[i].releaseAll(Tone.now)
-				trackVoice.current[i].disconnect()
-			}
 			demoParts.current = []
 
 			Tone.Transport.cancel()
@@ -415,20 +410,20 @@ export default function Sounds() {
 
 				//tisoy
 				for (let i = 0; i < midiHeader.timeSignatures.length; i++) {
-					Tone.Transport.scheduleOnce((t) => {
+					Tone.Transport.scheduleOnce(() => {
 						setTimeSignature(midiHeader.timeSignatures[i].timeSignature)
 					}, midiHeader.timeSignatures[i].ticks + 'i')
 				}
 
 				// tiktok
 				for (let i = 0; i < midiHeader.tempos.length; i++) {
-					Tone.Transport.scheduleOnce((t) => {
+					Tone.Transport.scheduleOnce(() => {
 						setBPM(Math.ceil(midiHeader.tempos[i].bpm))
 					}, midiHeader.tempos[i].ticks + 'i')
 				}
 
 				// catch end
-				Tone.Transport.scheduleOnce((t) => {
+				Tone.Transport.scheduleOnce(() => {
 					liveDemo(true)
 				}, trackEnd + 'i')
 				//control changes
@@ -549,7 +544,6 @@ export default function Sounds() {
 						const attack = note.duration
 						const release = t
 
-						// const playBy = demoVoices.current[i]
 						const playBy = liveSampler.current
 						playBy.triggerAttackRelease(
 							Tone.Frequency(note.midi, 'midi').toNote(),

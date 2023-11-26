@@ -1,50 +1,42 @@
 import * as THREE from 'three'
-import { Suspense, useMemo } from 'react'
-import { useTexture } from '@react-three/drei'
+import {
+	Suspense,
+	useMemo,
+	// useEffect,
+	useRef,
+} from 'react'
+// import { extend } from '@react-three/fiber'
+import {
+	// shaderMaterial,
+	useTexture,
+} from '@react-three/drei'
 
 const ROUGHNESS = 1
-const METALNESS = .9
+const METALNESS = 0.9
 const EMISSIVE = '#b6e5ff'
-const COLOR_ACTIVE = '#0084ff'
-const ENV_MAP_INTENSITY_DEFAULT = {
-	value: 1,
-	min: 0,
-	max: 12,
+
+//o hahahahaha betch
+// https://codesandbox.io/p/sandbox/r3f-inverted-hull-z5tqm?file=%2Fsrc%2FSuzanne.js%3A41%2C23-41%2C41
+export function HighlightMaterial({ color = EMISSIVE, materialProps }) {
+	const theHighlight = useRef()
+
+	return (
+		<meshStandardMaterial
+			color={color}
+			ref={theHighlight}
+			// receiveShadows
+			// opacity={0.96}
+			// transparent
+			roughness={1.5}
+			metalness={1}
+			// emissive={color}
+			// emissiveIntensity={0.2}
+			// side={THREE.BackSide}
+			depthWrite={false}
+			{...materialProps}
+		/>
+	)
 }
-
-// export function HighlightMaterial({color,size,materialProps}) {
-// 	return <shaderMaterial
-// 		uniforms={{
-// 			uColor: {
-// 			value: new THREE.Color(color)
-// 			},
-// 			uSize: {
-// 			value: size
-// 			},
-// 		}}
-// 		vertexShader={`
-// 			// uniform float uSize;
-
-// 			void main() {
-// 			vec3 transformed = position * uSize / 100.0;
-// 			gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
-// 			// gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-// 			}
-// 		`}
-// 		fragmentShader={`
-// 			uniform vec3 uColor;
-
-// 			void main() {
-// 				gl_FragColor = vec4(uColor, 1.0);
-// 				// gl_FragColor = vec4( 1.0, 1.0, 0.0, 1.0)
-// 			}
-// 		`}
-// 		depthWrite={false}
-// 		color={color}
-// 		// side={THREE.BackSide}
-// 		{...materialProps}
-// 	/>
-// }
 
 export function PianoScreenForeground({ color, materialProps }) {
 	return <meshBasicMaterial {...color} {...materialProps} />

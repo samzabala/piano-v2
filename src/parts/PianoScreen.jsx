@@ -4,7 +4,7 @@ Screen UI: pang pretty pretty lang
 
 import './../scss/_PianoScreen.scss'
 
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import {
 	Html,
 	// Decal,
@@ -20,7 +20,7 @@ import { useControls } from 'leva'
 import usePlay from '../stores/usePlay.jsx'
 
 import { getPrimitiveNodes } from '../imports/model.jsx'
-import { SharedMaterial, PianoScreenForeground } from '../imports/materials.jsx'
+import { SharedMaterial } from '../imports/materials.jsx'
 import { voicesProps } from '../imports/audio'
 import { demoProps } from '../imports/demo'
 
@@ -46,17 +46,17 @@ export default function PianoScreen({ materialProps, objProps = {} }) {
 			label: 'Background',
 			value: '#4c4d94', //b00b1E
 			transient: false,
-			onChange: (v) => {
-				document.body.style.setProperty('--pianoScreen-background', v)
-			},
+			// onChange: (v) => {
+			// 	document.body.style.setProperty('--pianoScreen-background', v)
+			// },
 		},
 		foreground: {
 			label: 'Foreground',
 			value: '#dadef3', //b00b1E
 			transient: false,
-			onChange: (v) => {
-				document.body.style.setProperty('--pianoScreen-foreground', v)
-			},
+			// onChange: (v) => {
+			// 	document.body.style.setProperty('--pianoScreen-foreground', v)
+			// },
 		},
 	})
 
@@ -120,7 +120,13 @@ export default function PianoScreen({ materialProps, objProps = {} }) {
 							e.stopPropagation()
 						}}
 					>
-						<div className='pianoScreen'>
+						<div
+							className='pianoScreen'
+							style={{
+								'--pianoScreen-background': background,
+								'--pianoScreen-foreground': foreground,
+							}}
+						>
 							<span className='pianoScreen-item pianoScreen-item-voiceIndex'>
 								<span>
 									{voice + 1 < 99 ? `00${voice + 1}` : voice + 1}

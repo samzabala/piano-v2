@@ -1,10 +1,8 @@
-import { useState } from 'react'
-
-import Grand from './sounds/grand'
-import NotAPiano from './sounds/notapiano'
-import LuhMiMumu from './sounds/luhmimumu'
-import Mochi from './sounds/mochi'
-import Tick from './sounds/Tick'
+import Grand from './audio/Grand'
+import NotAPiano from './audio/NotAPiano'
+import LuhMiMumu from './audio/LuhMiMumu'
+import Mochi from './audio/Mochi'
+import Tick from './audio/Tick'
 
 export const voicesProps = [
 	{

@@ -3,12 +3,11 @@ Experience: the whole butt
 */
 
 // TODO safari is being a bitch with shadows and the html helper
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import * as THREE from 'three'
-import { useLoader, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import {
 	Environment,
-	// useTexture,
 	// ContactShadows,
 	Shadow,
 	// AccumulativeShadows,
@@ -17,8 +16,9 @@ import {
 	PresentationControls,
 	Circle,
 	MeshReflectorMaterial,
+	useKeyboardControls,
 } from '@react-three/drei'
-import { BlendFunction } from 'postprocessing'
+// import { BlendFunction } from 'postprocessing'
 import {
 	SMAA,
 	Bloom,
@@ -39,16 +39,20 @@ import Butts from '../parts/Butts.jsx'
 import Pedals from '../parts/Pedals.jsx'
 import Metronome from '../parts/Metronome.jsx'
 
-import { getPolarColor } from '../imports/helpers.js'
+import keebControl from '../imports/keebControl.js'
+
+import { getPolarColor, notes, notesLength } from '../imports/helpers.js'
 
 export default function Scene() {
 	//states n helpers
+	const ready = usePlay((state) => state.ready)
+
 	const octaves = usePlay((state) => state.octaves)
 	const octaveCodeOffset = usePlay((state) => state.octaveCodeOffset)
 	const startNote = usePlay((state) => state.startNote)
 	const endNote = usePlay((state) => state.endNote)
 
-	// const keebOctave = usePlay((state) => state.keebOctave) //todo
+	const keebOctave = usePlay((state) => state.keebOctave) //todo
 
 	const focusOn = usePlay((state) => state.focusOn)
 	const setFocus = usePlay((state) => state.setFocus)
@@ -63,7 +67,7 @@ export default function Scene() {
 	const directionalLight = useRef()
 	// useHelper(directionalLight, THREE.DirectionalLightHelper, 1 )
 
-	const camera = useRef()
+	// const camera = useRef()
 
 	// const envFiles = [
 	// 	'./environment/3/px.png',
@@ -145,6 +149,23 @@ export default function Scene() {
 		}
 	)
 
+	//keebs legend
+	const [keebOctave_up, keebOctave_down] = useKeyboardControls((state) => [
+		state.keebOctave_up,
+		state.keebOctave_down,
+	])
+	const setShowKeebsTimeout = useRef(null)
+	const [showKeebsOctave, setShowKeebsOctave] = useState(false)
+	useEffect(() => {
+		if (ready && (keebOctave_up || keebOctave_down)) {
+			clearTimeout(setShowKeebsTimeout.current)
+			setShowKeebsOctave(true)
+			setShowKeebsTimeout.current = setTimeout(() => {
+				setShowKeebsOctave(false)
+			}, 1000)
+		}
+	}, [keebOctave_up, keebOctave_down])
+
 	//camera shit
 	const tactileBody = useRef()
 	const metronomeBody = useRef()
@@ -155,9 +176,9 @@ export default function Scene() {
 	const [smoothedCameraTarget] = useState(() => new THREE.Vector3())
 	// let smoothedCameraPosition
 	// let smoothedCameraTarget
-	const [cameraLastPosition, setCameraLastPosition] = useState(
-		() => new THREE.Vector3()
-	)
+	// const [  cameraLastPosition,  setCameraLastPosition ] = useState(
+	// 	() => new THREE.Vector3()
+	// )
 
 	// so we can see everything no matter how viewport and adjust camera stuff... words
 	const vOffset = () => {
@@ -313,20 +334,19 @@ export default function Scene() {
 		camera.lookAt(smoothedCameraTarget)
 
 		setIsLerping(smoothedCameraPosition.distanceTo(cameraPosition) > 0.001)
-		// }
-
-		setCameraLastPosition(camera.position)
 	})
 
-	// useEffect(() => {
-	// 	if (
-	// 		!isLerping // HOY
-	// 	) {
-	// 		showPianoScreen()
-	// 	} else {
-	// 		hidePianoScreen()
-	// 	}
-	// }, [isLerping])
+	useEffect(() => {
+		if (
+			!isLerping // HOY
+		) {
+			console.info('not lerping')
+			// showPianoScreen()
+		} else {
+			console.info('lerping')
+			// hidePianoScreen()
+		}
+	}, [isLerping])
 
 	// events and shit
 	const handleResetCamera = (e) => {
@@ -456,7 +476,8 @@ export default function Scene() {
 							/>
 						</group>
 						<group ref={tactileBody} onClick={handleTactileFocus}>
-							<group position={[10.34 + -0.02 * soften, 10.534, -4.96]}>
+							{/* 0,10.55,5.01 */}
+							<group position={[10.34 + -0.02 * soften, 10.58, -5.03]}>
 								<Keys
 									octaves={octaves}
 									octaveCodeOffset={octaveCodeOffset}
@@ -467,6 +488,45 @@ export default function Scene() {
 										envMapIntensity: envMapIntensity,
 									}}
 								/>
+
+								{showKeebsOctave && focusOn == 'tactile' && (
+									<Keys
+										octaves={
+											keebOctave == octaves
+												? 1
+												: Math.ceil(
+														keebControl.notes.length /
+															notesLength
+												  )
+										}
+										octaveCodeOffset={
+											octaveCodeOffset + keebOctave - 1
+										}
+										startNote={
+											keebOctave == 1 ? startNote : notes[0]
+										}
+										endNote={
+											keebOctave == octaves
+												? endNote
+												: notes[
+														(keebControl.notes.length - 1) %
+															notesLength
+												  ]
+										}
+										color={primary}
+										mode={'highlight'}
+										objProps={{
+											position: [-2.24 * (keebOctave - 1), 0, 0],
+										}}
+										materialProps={
+											{
+												// transparent: true,
+												// opacity: 0,
+												// size: 3
+											}
+										}
+									/>
+								)}
 							</group>
 							<Butts
 								materialProps={{
