@@ -3,7 +3,7 @@ Experience: the whole butt
 */
 
 // TODO safari is being a bitch with shadows and the html helper
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import {
@@ -24,6 +24,7 @@ import {
 	Bloom,
 	// SelectiveBloom,
 	// Noise,
+	// HueSaturation,
 	EffectComposer,
 } from '@react-three/postprocessing'
 
@@ -52,7 +53,7 @@ export default function Scene() {
 	const startNote = usePlay((state) => state.startNote)
 	const endNote = usePlay((state) => state.endNote)
 
-	const keebOctave = usePlay((state) => state.keebOctave) //todo
+	const keebOctave = usePlay((state) => state.keebOctave)
 
 	const focusOn = usePlay((state) => state.focusOn)
 	const setFocus = usePlay((state) => state.setFocus)
@@ -115,7 +116,7 @@ export default function Scene() {
 		},
 		washThreshold: {
 			label: 'Wash Threshold',
-			value: 0.18,
+			value: 0.00,
 			step: 0.01,
 			min: 0,
 			max: 1,
@@ -128,25 +129,33 @@ export default function Scene() {
 			envMapIntensity: {
 				label: 'Reflections',
 				// value: 0.82,
-				value: 0.69,
+				value: .69,
 				min: 0,
 				max: 2,
 				step: 0.01,
 			},
 			lightIntensity: {
 				label: 'Light Intensity',
-				value: 1.48,
+				value: 4.69,
 				min: 0,
-				max: 2,
+				max: 69,
 				step: 0.01,
 			},
 			lightPosition: {
 				label: 'Light Position',
-				value: { x: 9.11, y: 9.6, z: -10.8 },
+				value: { x: 9.11, y: 9.11, z: -10.8 },
 				joystick: 'invertY',
 				step: 0.01,
 			},
 		}
+	)
+	const lightColor = useMemo(
+		() => new THREE.Color('#ffffff')
+			.lerp(
+				new THREE.Color(background),
+				.2
+			),
+		[background]
 	)
 
 	//keebs legend
@@ -384,9 +393,13 @@ export default function Scene() {
 					mipmapBlur
 					intensity={washIntensity}
 					luminanceThreshold={washThreshold}
-					luminanceSmoothing={0.8}
+					luminanceSmoothing={1}
 				/>
-				{/* <Noise premultiply blendFunction={BlendFunction.ADD} /> */}
+				{/* <Noise premultiply  /> */}
+				{/* <HueSaturation
+					hue={0}
+					saturation={Math.PI * -.02} // saturation in radians
+				/> */}
 			</EffectComposer>
 
 			{/* <OrbitControls
@@ -419,14 +432,14 @@ export default function Scene() {
 			>
 				<directionalLight
 					ref={directionalLight}
-					color={background}
+					color={lightColor}
 					intensity={lightIntensity}
 					position-x={lightPosition.x}
 					position-y={lightPosition.y}
 					position-z={lightPosition.z}
 					castShadow
 					shadow-mapSize={[1024 * 2, 1022 * 2]}
-					shadow-normalBias={0.009}
+					shadow-normalBias={0.0009}
 					shadow-mapType={THREE.PCFSoftShadowMap}
 				/>
 				{/* <ambientLight color={'#ffffff'} intensity={.2} /> */}
@@ -562,14 +575,14 @@ export default function Scene() {
 						<MeshReflectorMaterial
 							color={background}
 							blur={[400, 100]}
-							resolution={1024}
-							mixBlur={1}
-							mixStrength={1}
+							resolution={1024 * 2}
+							mixBlur={.69}
+							mixStrength={.31}
 							depthScale={1}
-							minDepthThreshold={0.85}
+							minDepthThreshold={.96}
 							metalness={0.1}
 							roughness={0.89}
-							envMapIntensity={0.09}
+							envMapIntensity={envMapIntensity * .05}
 							envMap={false}
 						/>
 					</Circle>

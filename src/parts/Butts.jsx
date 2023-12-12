@@ -10,6 +10,7 @@ import {
 	handleCursorPointer,
 	handleCursorRevert,
 	rainbowColors,
+	deviceChecksOut
 } from './../imports/helpers'
 
 import { getPrimitiveNodes } from './../imports/model'
@@ -22,6 +23,8 @@ export default function Model({ materialProps }) {
 	const setTranspose = usePlay((state) => state.setTranspose)
 
 	const focusOn = usePlay((state) => state.focusOn)
+
+	const setSubtitle = usePlay((state) => state.setSubtitle)
 
 	const voice = usePlay((state) => state.voice)
 	const updateVoice = usePlay((state) => state.updateVoice)
@@ -39,6 +42,20 @@ export default function Model({ materialProps }) {
 	const knoRotationLimit = Math.PI * -1.5 // 1.815
 	const ambienceController = useRef()
 	const [knobRotation, setKnobRotaion] = useState(0)
+
+	const subtitleText = `This feature isn't supported for your device yet :/`
+	const subtitleTimeout = useRef(null)
+	const subtitleDuration = 4000
+
+	const initSubTitle = () => {
+
+		clearTimeout(subtitleTimeout.current)
+		setSubtitle(subtitleText)
+		subtitleTimeout.current = setTimeout(() => {
+			setSubtitle('')
+		},subtitleDuration)
+	}
+
 
 	const bindKnob = useGesture(
 		{
@@ -96,6 +113,7 @@ export default function Model({ materialProps }) {
 
 	const handleKnobReset = (e) => {
 		e.stopPropagation()
+
 		if (focusOn == 'tactile') {
 			updateAmbience(0)
 		}
@@ -124,6 +142,7 @@ export default function Model({ materialProps }) {
 	const transposeDownController = useRef()
 
 	const handleTransposeDown = (e) => {
+
 		if (focusOn == 'tactile' && e.object) {
 			e.stopPropagation()
 			setTranspose(transpose - 1)
@@ -137,6 +156,7 @@ export default function Model({ materialProps }) {
 	const transposeUpController = useRef()
 
 	const handleTransposeUp = (e) => {
+		
 		if (focusOn == 'tactile' && e.object) {
 			e.stopPropagation()
 			setTranspose(transpose + 1)
@@ -168,6 +188,7 @@ export default function Model({ materialProps }) {
 	const voiceControllers = Array(voicesProps.length).fill(useRef()) //tt, 214
 
 	const handleTone = (e) => {
+		
 		if (focusOn == 'tactile' && e.object) {
 			e.stopPropagation()
 			if (voice !== e.object.voiceKey) {
@@ -181,34 +202,53 @@ export default function Model({ materialProps }) {
 	const [demoWasKilled, setDemoWasKilled] = useState(false)
 
 	const handleDemoController = (e) => {
-		if (focusOn == 'tactile') {
-			e.stopPropagation()
 
-			if (!demoWasKilled) {
-				liveDemo()
+		if(deviceChecksOut()){
+			if (focusOn == 'tactile') {
+				e.stopPropagation()
+	
+				if (!demoWasKilled) {
+					liveDemo()
+				}
+				setDemoWasKilled(false)
 			}
-			setDemoWasKilled(false)
+			
+		} else {
+			initSubTitle()
 		}
 	}
 
 	const dieDemoTimeout = useRef(null)
 
 	const handleDemoPointerDown = (e) => {
-		if (focusOn == 'tactile') {
-			e.stopPropagation()
 
-			dieDemoTimeout.current = setTimeout(() => {
-				dieDemo(0)
-				setDemoWasKilled(true)
-			}, 1000)
+		if(deviceChecksOut()){
+			if (focusOn == 'tactile') {
+				e.stopPropagation()
+	
+				dieDemoTimeout.current = setTimeout(() => {
+					dieDemo(0)
+					setDemoWasKilled(true)
+				}, 1000)
+			}
+			
+		} else {
+			initSubTitle()
 		}
 	}
 
 	const handleDemoPointerUp = (e) => {
-		if (focusOn == 'tactile') {
-			e.stopPropagation()
-			clearTimeout(dieDemoTimeout.current)
-			dieDemoTimeout.current = null
+
+
+		if(deviceChecksOut()){
+			if (focusOn == 'tactile') {
+				e.stopPropagation()
+				clearTimeout(dieDemoTimeout.current)
+				dieDemoTimeout.current = null
+			}
+			
+		} else {
+			initSubTitle()
 		}
 	}
 

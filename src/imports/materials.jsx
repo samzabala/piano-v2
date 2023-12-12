@@ -11,8 +11,8 @@ import {
 	useTexture,
 } from '@react-three/drei'
 
-const ROUGHNESS = 1
-const METALNESS = 0.9
+const ROUGHNESS = 0.96
+const METALNESS = .8
 const EMISSIVE = '#b6e5ff'
 
 //o hahahahaha betch
@@ -82,7 +82,7 @@ export function SharedMaterial(materialProps) {
 				metalnessMap={MetalnessMap}
 				// metalnessMap={ SpecularMap }
 				bumpMap={BumpMap}
-				bumpScale={0.02}
+				bumpScale={1.069}
 				emissive={EMISSIVE}
 				emissiveMap={EmissiveMap}
 				{...materialProps}

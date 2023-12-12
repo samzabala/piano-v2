@@ -14,6 +14,7 @@ import {
 	bpmRange,
 } from '../imports/helpers'
 
+
 export default create(
 	subscribeWithSelector((set) => {
 		// https://computermusicresource.com/midikeys.html
@@ -67,6 +68,9 @@ export default create(
 
 			// lerp fix because webkit is being such a little bitch
 			hasPianoScreen: true,
+
+			//for warnings
+			subtitle: '',
 
 			// which index from the available sampler voices i set up for u pucharagis
 			voice: 0,
@@ -312,6 +316,15 @@ export default create(
 					if (!state.ready) return {}
 
 					return { hasPianoScreen: false }
+				})
+			},
+
+			// duh
+			setSubtitle(newSubtitle) {
+				set((state) => {
+					if (!state.ready) return {}
+
+					return { subtitle: newSubtitle }
 				})
 			},
 

@@ -1,4 +1,5 @@
 import './style.scss'
+// import * as THREE from 'three'
 // import { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
@@ -65,9 +66,10 @@ root.render(
 		<KeyboardControls map={keebMap}>
 			<Canvas
 				gl={{
-					// antialias: true,
+					antialias: true,
 					// toneMapping: THREE.ACESFilmicToneMapping,
-					toneMappingExposure: 0.98,
+					// toneMappingExposure: .3,
+					// useLegacyLights: true,
 				}}
 				shadows //dai mo ni lingawon pota
 				camera={{

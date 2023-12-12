@@ -94,12 +94,15 @@ From our lorde and el salvador <a href='https://https://fonts.google.com/icons/'
 
 # Version Log
 
+2.1
+- updated packages
+- added warnings and blocked some tone js related features because the bitch is being a hoe with ios
 
+- bitch
 2.0.2
 - added eslint
 - and then visual feedback on which octave is fucked with
 - k bye
-
 2.0.1
 - i clean up shits
 - the fuckin html is still panicking on lerpy derpy mode tho.

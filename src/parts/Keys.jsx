@@ -49,13 +49,29 @@ export default function Model({
 		return e.object.userData.musicData
 	}
 
-	const getKeyPressAngle = (midiCode, noteName, velocity = 1) => {
-		return playing.filter(([m]) => m == midiCode).length ||
-			playingDemo.filter(([m]) => m == midiCode).length
-			? isNatural(noteName)
-				? Math.PI * -0.028 * velocity
-				: Math.PI * -0.016 * velocity
-			: 0
+	const getKeyPressAngle = (midiCode, noteName) => {
+		const inLive = playing.filter(([m]) => m == midiCode)
+		const inDemo = playingDemo.filter(([m]) => m == midiCode)
+
+		if(!(inLive.length || inDemo.length)) return 0
+
+		const maxPressW = Math.PI * -0.032
+		const maxPressB = Math.PI * -0.018
+		const minPressW = maxPressW + .02
+		const minPressB = maxPressB + .02
+
+		let velocity
+
+		if(!velocity && inLive.length) 
+			velocity = inLive[0][1]
+
+
+		if(!velocity && inDemo.length) 
+			velocity = inDemo[0][1]
+
+		return isNatural(noteName)
+			? Math.min(minPressW,maxPressW * velocity)
+			: Math.min(minPressB,maxPressB * velocity)
 	}
 	const wOff = 0
 	const bOff = -0.32
@@ -162,7 +178,7 @@ export default function Model({
 			)
 
 			dummyT.rotation.set(
-				getKeyPressAngle(ins[i].midiCode, ins[i].noteName), //todo press angle multiply by velocity
+				getKeyPressAngle(ins[i].midiCode, ins[i].noteName),
 				0,
 				0
 			)
@@ -183,7 +199,6 @@ export default function Model({
 		playing,
 		playingDemo,
 		keebOctave,
-		// hasKeebsMap // todo maybe
 	])
 
 	//update music related data

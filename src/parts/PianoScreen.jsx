@@ -44,7 +44,7 @@ export default function PianoScreen({ materialProps, objProps = {} }) {
 	const { background, foreground } = useControls('Piano Ui', {
 		background: {
 			label: 'Background',
-			value: '#4c4d94', //b00b1E
+			value: '#565b95', //b00b1E
 			transient: false,
 			// onChange: (v) => {
 			// 	document.body.style.setProperty('--pianoScreen-background', v)
@@ -52,7 +52,7 @@ export default function PianoScreen({ materialProps, objProps = {} }) {
 		},
 		foreground: {
 			label: 'Foreground',
-			value: '#dadef3', //b00b1E
+			value: '#d2f5ff', //b00b1E
 			transient: false,
 			// onChange: (v) => {
 			// 	document.body.style.setProperty('--pianoScreen-foreground', v)

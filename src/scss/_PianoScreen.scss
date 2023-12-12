@@ -1,7 +1,7 @@
 .pianoScreen {
 	--f-monospace: '04b08', monospace;
-	background: var(--pianoScreen-background, #4c4d94);
-	color: var(--pianoScreen-foreground, #dadef3);
+	background: var(--pianoScreen-background, #565b95);
+	color: var(--pianoScreen-foreground, #d2f5ff);
 	font-family: var(--f-monospace);
 	// width: 12.5em;
 	// height: 3.75em;
@@ -46,8 +46,8 @@
 		text-align: center;
 
 		&-voiceIndex {
-			color: var(--pianoScreen-background, #384488);
-			background: var(--pianoScreen-foreground, #d7e0f5);
+			color: var(--pianoScreen-background, #565b95);
+			background: var(--pianoScreen-foreground, #d2f5ff);
 			font-weight: bolder;
 			letter-spacing: 0.01em;
 		}

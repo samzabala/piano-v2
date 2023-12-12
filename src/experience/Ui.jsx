@@ -22,6 +22,7 @@ import {
 	volumeRange,
 	// timeSignatureBeatRange,
 	bpmRange,
+	deviceChecksOut
 } from '../imports/helpers'
 
 export default function Ui() {
@@ -48,6 +49,8 @@ export default function Ui() {
 	const enableKeebs = usePlay((state) => state.enableKeebs)
 	const disableKeebs = usePlay((state) => state.disableKeebs)
 
+	const subtitle = usePlay((state) => state.subtitle)
+
 	const demo = usePlay((state) => state.demo)
 	const isDemoing = usePlay((state) => state.isDemoing)
 
@@ -60,8 +63,19 @@ export default function Ui() {
 		return match ? match[1].trim() : ''
 	}, [])
 
-	const [hasLandscapeWarning, updateLandscapeWarning] = useState(true)
+	const [hasMobileWarning, updateMobileWarning] = useState(true)
+	const [deviceCheck, setDeviceCheck] = useState(deviceChecksOut())
 
+
+    useEffect(() => {
+		const unsubscribeResize = () => {
+            setDeviceCheck(deviceChecksOut())
+        }
+        window.addEventListener("resize", unsubscribeResize );
+        return () => {
+            window.removeEventListener("resize", unsubscribeResize)
+        }
+    }, []);
 	const [hideSoundSpinner, setSoundSpinner] = useState(true)
 	useEffect(() => {
 		// window.addEventListener('keydown',handleNoteKeyDown)
@@ -493,19 +507,19 @@ export default function Ui() {
 				</div>
 			</div>
 
-			{/* No shitty screen sizes allowed. unless user wants to im not their mom */}
-			{hasLandscapeWarning ? (
-				<div className='overlay landscape-check'>
+			{/* No shitty screen sizes and pointers allowed. unless user wants to im not their mom */}
+			{hasMobileWarning && !deviceCheck ? (
+				<div className='overlay'>
 					<div className='overlay-contents'>
 						<p>
-							You can rotate to landscape
-							<br /> for a better experience ;)
+							Some features may be limited for mobile. <br />
+							For a better experience, a larger or landscape device is recommended.
 						</p>
 						<a
 							href='#'
 							onClick={(e) => {
 								e.preventDefault()
-								updateLandscapeWarning(false)
+								updateMobileWarning(false)
 							}}
 							className='button'
 						>
@@ -514,6 +528,14 @@ export default function Ui() {
 					</div>
 				</div>
 			) : null}
+
+			{/* warn that bitch */}
+
+			{
+			subtitle
+				? <div className='subtitle' >{ subtitle }</div>
+				: null
+			}
 
 			{/* sampler spinner */}
 			<LoadingSpinner text={'Loading sounds....'} hide={hideSoundSpinner} />

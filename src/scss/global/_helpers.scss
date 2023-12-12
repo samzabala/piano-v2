@@ -354,12 +354,6 @@
 	}
 }
 
-.landscape-check {
-	@media (min-width: 768px), (orientation: landscape) {
-		display: none !important;
-	}
-}
-
 .hide-scrollbar {
 	scrollbar-width: none;
 	&::-webkit-scrollbar {
@@ -386,5 +380,31 @@
 			var(--c-noot) 0%,
 			transparent 100%
 		);
+	}
+}
+
+
+.subtitle {
+	position: fixed;
+	padding: 1em;
+	max-height: max-content;
+	left:0;
+	right: 0;
+	bottom: 3rem;
+	font-size: 1.5rem;
+	text-align: center;
+	color: var(--c-primary-polar);
+
+	&::after {
+		content:"";
+		z-index: -1;
+		position: absolute;
+		display: block;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		opacity: .75;
+		background: var(--c-primary);
 	}
 }

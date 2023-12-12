@@ -1,7 +1,6 @@
 /*
 Sounds: para may marining kang buruguduystunstugudunstuy by Parokya Ni Edgar
 */
-// todo. release visual is watdapak ayusin mo yan`
 import * as Tone from 'tone'
 import { useEffect, useState, useMemo, useRef } from 'react'
 import usePlay from '../stores/usePlay.jsx'

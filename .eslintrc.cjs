@@ -11,7 +11,7 @@ module.exports = {
 		'eslint:recommended',
 	],
 	parserOptions: {
-		parser: 'babel-eslint',
+		parser: '@babel/eslint-parser',
 		sourceType: 'module',
 		ecmaVersion: 2020,
 		ecmaFeatures: {
