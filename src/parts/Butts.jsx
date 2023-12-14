@@ -10,7 +10,6 @@ import {
 	handleCursorPointer,
 	handleCursorRevert,
 	rainbowColors,
-	deviceChecksOut
 } from './../imports/helpers'
 
 import { getPrimitiveNodes } from './../imports/model'
@@ -25,6 +24,7 @@ export default function Model({ materialProps }) {
 	const focusOn = usePlay((state) => state.focusOn)
 
 	const setSubtitle = usePlay((state) => state.setSubtitle)
+	const isMobile = usePlay((state) => state.isMobile)
 
 	const voice = usePlay((state) => state.voice)
 	const updateVoice = usePlay((state) => state.updateVoice)
@@ -48,14 +48,12 @@ export default function Model({ materialProps }) {
 	const subtitleDuration = 4000
 
 	const initSubTitle = () => {
-
 		clearTimeout(subtitleTimeout.current)
 		setSubtitle(subtitleText)
 		subtitleTimeout.current = setTimeout(() => {
 			setSubtitle('')
-		},subtitleDuration)
+		}, subtitleDuration)
 	}
-
 
 	const bindKnob = useGesture(
 		{
@@ -142,7 +140,6 @@ export default function Model({ materialProps }) {
 	const transposeDownController = useRef()
 
 	const handleTransposeDown = (e) => {
-
 		if (focusOn == 'tactile' && e.object) {
 			e.stopPropagation()
 			setTranspose(transpose - 1)
@@ -156,7 +153,6 @@ export default function Model({ materialProps }) {
 	const transposeUpController = useRef()
 
 	const handleTransposeUp = (e) => {
-		
 		if (focusOn == 'tactile' && e.object) {
 			e.stopPropagation()
 			setTranspose(transpose + 1)
@@ -188,7 +184,6 @@ export default function Model({ materialProps }) {
 	const voiceControllers = Array(voicesProps.length).fill(useRef()) //tt, 214
 
 	const handleTone = (e) => {
-		
 		if (focusOn == 'tactile' && e.object) {
 			e.stopPropagation()
 			if (voice !== e.object.voiceKey) {
@@ -202,17 +197,15 @@ export default function Model({ materialProps }) {
 	const [demoWasKilled, setDemoWasKilled] = useState(false)
 
 	const handleDemoController = (e) => {
-
-		if(deviceChecksOut()){
+		if (!isMobile) {
 			if (focusOn == 'tactile') {
 				e.stopPropagation()
-	
+
 				if (!demoWasKilled) {
 					liveDemo()
 				}
 				setDemoWasKilled(false)
 			}
-			
 		} else {
 			initSubTitle()
 		}
@@ -221,32 +214,27 @@ export default function Model({ materialProps }) {
 	const dieDemoTimeout = useRef(null)
 
 	const handleDemoPointerDown = (e) => {
-
-		if(deviceChecksOut()){
+		if (!isMobile) {
 			if (focusOn == 'tactile') {
 				e.stopPropagation()
-	
+
 				dieDemoTimeout.current = setTimeout(() => {
 					dieDemo(0)
 					setDemoWasKilled(true)
 				}, 1000)
 			}
-			
 		} else {
 			initSubTitle()
 		}
 	}
 
 	const handleDemoPointerUp = (e) => {
-
-
-		if(deviceChecksOut()){
+		if (!isMobile) {
 			if (focusOn == 'tactile') {
 				e.stopPropagation()
 				clearTimeout(dieDemoTimeout.current)
 				dieDemoTimeout.current = null
 			}
-			
 		} else {
 			initSubTitle()
 		}

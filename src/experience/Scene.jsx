@@ -19,14 +19,7 @@ import {
 	useKeyboardControls,
 } from '@react-three/drei'
 // import { BlendFunction } from 'postprocessing'
-import {
-	SMAA,
-	Bloom,
-	// SelectiveBloom,
-	// Noise,
-	// HueSaturation,
-	EffectComposer,
-} from '@react-three/postprocessing'
+import { SMAA, Bloom, EffectComposer } from '@react-three/postprocessing'
 
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf' //performance tracker
@@ -57,10 +50,6 @@ export default function Scene() {
 
 	const focusOn = usePlay((state) => state.focusOn)
 	const setFocus = usePlay((state) => state.setFocus)
-
-	// const showPianoScreen = usePlay((state) => state.showPianoScreen)
-	// const hidePianoScreen = usePlay((state) => state.hidePianoScreen)
-	// const hasPianoScreen = usePlay((state) => state.hasPianoScreen)
 
 	//did u know keys shift a bit when u push this pedal because strings? ako din. galeng :O
 	const soften = usePlay((state) => state.soften)
@@ -116,7 +105,7 @@ export default function Scene() {
 		},
 		washThreshold: {
 			label: 'Wash Threshold',
-			value: 0.00,
+			value: 0.0,
 			step: 0.01,
 			min: 0,
 			max: 1,
@@ -129,7 +118,7 @@ export default function Scene() {
 			envMapIntensity: {
 				label: 'Reflections',
 				// value: 0.82,
-				value: .69,
+				value: 0.69,
 				min: 0,
 				max: 2,
 				step: 0.01,
@@ -150,11 +139,7 @@ export default function Scene() {
 		}
 	)
 	const lightColor = useMemo(
-		() => new THREE.Color('#ffffff')
-			.lerp(
-				new THREE.Color(background),
-				.2
-			),
+		() => new THREE.Color('#ffffff').lerp(new THREE.Color(background), 0.2),
 		[background]
 	)
 
@@ -199,15 +184,14 @@ export default function Scene() {
 	}
 	// smooooth
 	const lerpFactor = 0.069
-	const [isLerping, setIsLerping] = useState(true) //fuckin webkit
 
 	// added based on subject
 	const [posOffset] = useState({
 		tactile: {
 			position: {
 				x: 0,
-				y: 1.2,
-				z: 1.7,
+				y: 0.9,
+				z: 1.5,
 			},
 			target: {
 				x: 0,
@@ -341,21 +325,7 @@ export default function Scene() {
 
 		camera.position.copy(smoothedCameraPosition)
 		camera.lookAt(smoothedCameraTarget)
-
-		setIsLerping(smoothedCameraPosition.distanceTo(cameraPosition) > 0.001)
 	})
-
-	useEffect(() => {
-		if (
-			!isLerping // HOY
-		) {
-			console.info('not lerping')
-			// showPianoScreen()
-		} else {
-			console.info('lerping')
-			// hidePianoScreen()
-		}
-	}, [isLerping])
 
 	// events and shit
 	const handleResetCamera = (e) => {
@@ -385,21 +355,12 @@ export default function Scene() {
 
 			<EffectComposer multisampling={2}>
 				<SMAA />
-				{/* <SelectiveBloom
-					selection={[pianoBody,metronomeBody]}
-					lights={[directionalLight]}
-					selectionLayer={0} */}
 				<Bloom
 					mipmapBlur
 					intensity={washIntensity}
 					luminanceThreshold={washThreshold}
-					luminanceSmoothing={1}
+					luminanceSmoothing={0.8}
 				/>
-				{/* <Noise premultiply  /> */}
-				{/* <HueSaturation
-					hue={0}
-					saturation={Math.PI * -.02} // saturation in radians
-				/> */}
 			</EffectComposer>
 
 			{/* <OrbitControls
@@ -438,7 +399,7 @@ export default function Scene() {
 					position-y={lightPosition.y}
 					position-z={lightPosition.z}
 					castShadow
-					shadow-mapSize={[1024 * 2, 1022 * 2]}
+					shadow-mapSize={[1024 * 2, 1024 * 2]}
 					shadow-normalBias={0.0009}
 					shadow-mapType={THREE.PCFSoftShadowMap}
 				/>
@@ -510,7 +471,7 @@ export default function Scene() {
 												: Math.ceil(
 														keebControl.notes.length /
 															notesLength
-												  )
+													)
 										}
 										octaveCodeOffset={
 											octaveCodeOffset + keebOctave - 1
@@ -524,7 +485,7 @@ export default function Scene() {
 												: notes[
 														(keebControl.notes.length - 1) %
 															notesLength
-												  ]
+													]
 										}
 										color={primary}
 										mode={'highlight'}
@@ -575,14 +536,14 @@ export default function Scene() {
 						<MeshReflectorMaterial
 							color={background}
 							blur={[400, 100]}
-							resolution={1024 * 2}
-							mixBlur={.69}
-							mixStrength={.31}
+							resolution={1024}
+							mixBlur={0.69}
+							mixStrength={0.31}
 							depthScale={1}
-							minDepthThreshold={.96}
+							minDepthThreshold={0.96}
 							metalness={0.1}
 							roughness={0.89}
-							envMapIntensity={envMapIntensity * .05}
+							envMapIntensity={envMapIntensity * 0.05}
 							envMap={false}
 						/>
 					</Circle>

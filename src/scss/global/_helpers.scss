@@ -289,6 +289,7 @@
 	bottom: 0;
 	z-index: 9999999;
 	color: var(--c-noot-polar);
+	padding: 0.5rem;
 
 	&#{&}-disabled {
 		opacity: 0 !important;
@@ -383,28 +384,26 @@
 	}
 }
 
-
 .subtitle {
 	position: fixed;
-	padding: 1em;
+	padding: 0.75em;
 	max-height: max-content;
-	left:0;
+	left: 0;
 	right: 0;
 	bottom: 3rem;
-	font-size: 1.5rem;
 	text-align: center;
 	color: var(--c-primary-polar);
 
 	&::after {
-		content:"";
+		content: '';
 		z-index: -1;
 		position: absolute;
 		display: block;
-		top:0;
-		left:0;
-		right:0;
-		bottom:0;
-		opacity: .75;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		opacity: 0.75;
 		background: var(--c-primary);
 	}
 }

@@ -26,11 +26,11 @@ import { demoProps } from '../imports/demo'
 
 export default function PianoScreen({ materialProps, objProps = {} }) {
 	//states and helpers
-	const hasPianoScreen = usePlay((state) => state.hasPianoScreen)
-
 	const transpose = usePlay((state) => state.transpose)
 
 	const voice = usePlay((state) => state.voice)
+
+	const isMobile = usePlay((state) => state.isMobile)
 
 	const demo = usePlay((state) => state.demo)
 	const isDemoing = usePlay((state) => state.isDemoing)
@@ -44,7 +44,7 @@ export default function PianoScreen({ materialProps, objProps = {} }) {
 	const { background, foreground } = useControls('Piano Ui', {
 		background: {
 			label: 'Background',
-			value: '#565b95', //b00b1E
+			value: '#5c629c', //b00b1E
 			transient: false,
 			// onChange: (v) => {
 			// 	document.body.style.setProperty('--pianoScreen-background', v)
@@ -52,7 +52,7 @@ export default function PianoScreen({ materialProps, objProps = {} }) {
 		},
 		foreground: {
 			label: 'Foreground',
-			value: '#d2f5ff', //b00b1E
+			value: '#ddffff', //b00b1E
 			transient: false,
 			// onChange: (v) => {
 			// 	document.body.style.setProperty('--pianoScreen-foreground', v)
@@ -85,7 +85,7 @@ export default function PianoScreen({ materialProps, objProps = {} }) {
 				{/* <meshBasicMaterial color={background} /> */}
 			</mesh>
 
-			{hasPianoScreen ? (
+			{!isMobile ? (
 				<Html
 					wrapperClass='pianoScreen-Html'
 					touchAction={'none'}
@@ -101,20 +101,20 @@ export default function PianoScreen({ materialProps, objProps = {} }) {
 					// occlude='blending'
 
 					// scale={0.392}
-					scale={0.5}
+					scale={0.4999}
 					// castShadow
 					// receiveShadow
 					// material={<SharedMaterial color={'#384488'} frustumCulled={false} />}
 					style={{ pointerEvents: 'none' }}
 					// position-y={0.001}
 					rotation-y={Math.PI}
-					position-z={-0.039}
+					position-z={-0.029}
 					onClick={(e) => {
 						e.stopPropagation()
 					}}
 				>
 					<div
-						style={{ transform: 'scale(2)' }}
+						style={{ transform: 'scale(1.999)' }}
 						className='pianoScreen-wrap'
 						onClick={(e) => {
 							e.stopPropagation()

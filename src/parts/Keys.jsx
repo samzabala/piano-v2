@@ -53,25 +53,22 @@ export default function Model({
 		const inLive = playing.filter(([m]) => m == midiCode)
 		const inDemo = playingDemo.filter(([m]) => m == midiCode)
 
-		if(!(inLive.length || inDemo.length)) return 0
+		if (!(inLive.length || inDemo.length)) return 0
 
 		const maxPressW = Math.PI * -0.032
 		const maxPressB = Math.PI * -0.018
-		const minPressW = maxPressW + .02
-		const minPressB = maxPressB + .02
+		const minPressW = maxPressW + 0.02
+		const minPressB = maxPressB + 0.02
 
 		let velocity
 
-		if(!velocity && inLive.length) 
-			velocity = inLive[0][1]
+		if (!velocity && inLive.length) velocity = inLive[0][1]
 
-
-		if(!velocity && inDemo.length) 
-			velocity = inDemo[0][1]
+		if (!velocity && inDemo.length) velocity = inDemo[0][1]
 
 		return isNatural(noteName)
-			? Math.min(minPressW,maxPressW * velocity)
-			: Math.min(minPressB,maxPressB * velocity)
+			? Math.min(minPressW, maxPressW * velocity)
+			: Math.min(minPressB, maxPressB * velocity)
 	}
 	const wOff = 0
 	const bOff = -0.32
@@ -195,11 +192,7 @@ export default function Model({
 			updateInstancesAppearance(theWB, instancesWK, countWhite)
 			updateInstancesAppearance(theBK, instancesBK, countBlack)
 		}
-	}, [
-		playing,
-		playingDemo,
-		keebOctave,
-	])
+	}, [playing, playingDemo, keebOctave])
 
 	//update music related data
 	const updateInstancesMeta = (ref, ins, c) => {

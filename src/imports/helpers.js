@@ -139,10 +139,3 @@ export const rainbowColors = [
 	'hotpink', // Hot Pink
 	// 'fuchsia', // Fuchsia
 ]
-
-// because tone js and mobile os together are being such little bitches
-export const deviceChecksOut = () => {
-	return window.matchMedia(
-		'(min-width: 768px), (orientation: landscape), (pointer: fine)'
-	).matches
-}

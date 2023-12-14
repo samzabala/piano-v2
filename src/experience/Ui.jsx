@@ -22,7 +22,6 @@ import {
 	volumeRange,
 	// timeSignatureBeatRange,
 	bpmRange,
-	deviceChecksOut
 } from '../imports/helpers'
 
 export default function Ui() {
@@ -50,6 +49,7 @@ export default function Ui() {
 	const disableKeebs = usePlay((state) => state.disableKeebs)
 
 	const subtitle = usePlay((state) => state.subtitle)
+	const isMobile = usePlay((state) => state.isMobile)
 
 	const demo = usePlay((state) => state.demo)
 	const isDemoing = usePlay((state) => state.isDemoing)
@@ -64,18 +64,6 @@ export default function Ui() {
 	}, [])
 
 	const [hasMobileWarning, updateMobileWarning] = useState(true)
-	const [deviceCheck, setDeviceCheck] = useState(deviceChecksOut())
-
-
-    useEffect(() => {
-		const unsubscribeResize = () => {
-            setDeviceCheck(deviceChecksOut())
-        }
-        window.addEventListener("resize", unsubscribeResize );
-        return () => {
-            window.removeEventListener("resize", unsubscribeResize)
-        }
-    }, []);
 	const [hideSoundSpinner, setSoundSpinner] = useState(true)
 	useEffect(() => {
 		// window.addEventListener('keydown',handleNoteKeyDown)
@@ -508,12 +496,13 @@ export default function Ui() {
 			</div>
 
 			{/* No shitty screen sizes and pointers allowed. unless user wants to im not their mom */}
-			{hasMobileWarning && !deviceCheck ? (
+			{hasMobileWarning && isMobile ? (
 				<div className='overlay'>
 					<div className='overlay-contents'>
 						<p>
-							Some features may be limited for mobile. <br />
-							For a better experience, a larger or landscape device is recommended.
+							Features are limited for this device. <br />
+							For a better experience, a device with a larger screen is
+							recommended.
 						</p>
 						<a
 							href='#'
@@ -531,11 +520,7 @@ export default function Ui() {
 
 			{/* warn that bitch */}
 
-			{
-			subtitle
-				? <div className='subtitle' >{ subtitle }</div>
-				: null
-			}
+			{subtitle ? <div className='subtitle'>{subtitle}</div> : null}
 
 			{/* sampler spinner */}
 			<LoadingSpinner text={'Loading sounds....'} hide={hideSoundSpinner} />

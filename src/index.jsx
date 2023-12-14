@@ -8,9 +8,10 @@ import { Leva } from 'leva'
 
 import { voicesProps } from './imports/audio'
 
-import Experience from './experience/Scene.jsx'
+import Scene from './experience/Scene.jsx'
 import Ui from './experience/Ui.jsx'
 import Sounds from './experience/Sounds.jsx'
+import MobileFix from './experience/MobileFix.jsx'
 
 import Midi from './controls/Midi.jsx'
 import Keebs from './controls/Keebs.jsx'
@@ -67,6 +68,7 @@ root.render(
 			<Canvas
 				gl={{
 					antialias: true,
+					powerPreference: 'high-performance',
 					// toneMapping: THREE.ACESFilmicToneMapping,
 					// toneMappingExposure: .3,
 					// useLegacyLights: true,
@@ -79,7 +81,7 @@ root.render(
 					position: [0, 3, 4],
 				}}
 			>
-				<Experience />
+				<Scene />
 			</Canvas>
 			<Sounds />
 			<Midi />
@@ -87,5 +89,6 @@ root.render(
 		</KeyboardControls>
 		{/* </Suspense> */}
 		<Ui />
+		<MobileFix />
 	</>
 )

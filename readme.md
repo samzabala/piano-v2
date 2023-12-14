@@ -4,7 +4,7 @@ Sorry ya boi took a while, but now he here.
 
 He's named Kulangot now.
 
-[Live Boi](http://samzabala.space/projects/piano)
+[Live Boi](https://samzabala.space/projects/piano)
 
 ## Local Dev Setup
 
@@ -74,7 +74,7 @@ Arrangements are not for sale, redistribution, or reuse. Also No touchy.
 	* Love Me Harder.
 		Originally Ariana Grande.
 * The following are also by the same previous stupid creature above. Still no touchy for these sad beats. I'm working on them
-	* 214.
+	* 214 (Am I Real).
 		Originally by Rivermaya.
 	* Sorry Na, Pwede Ba?
 		Originally by Rico J Puno.
@@ -87,22 +87,30 @@ Environment Maps from <a href='https://polyhaven.com/' target='_blank'>polyhaven
 
 #### Icons:
 
-From our lorde and el salvador <a href='https://https://fonts.google.com/icons/' target='_blank'>google.com</a>
+From our lorde and el salvador <a href='https://fonts.google.com/icons/' target='_blank'>google.com</a>
 
 </div>
 
 
 # Version Log
 
+2.1.1
+- my shadows got fucked up ew. fixed
+- added state to check for mobile because tone.js was being an ass
+- drei's html is also still being an ass
+- kwan prettier
+- yun lang
+
 2.1
 - updated packages
 - added warnings and blocked some tone js related features because the bitch is being a hoe with ios
-
 - bitch
+
 2.0.2
 - added eslint
 - and then visual feedback on which octave is fucked with
 - k bye
+
 2.0.1
 - i clean up shits
 - the fuckin html is still panicking on lerpy derpy mode tho.

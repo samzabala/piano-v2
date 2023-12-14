@@ -14,7 +14,6 @@ import {
 	bpmRange,
 } from '../imports/helpers'
 
-
 export default create(
 	subscribeWithSelector((set) => {
 		// https://computermusicresource.com/midikeys.html
@@ -66,11 +65,11 @@ export default create(
 			// which bitch are we looking at
 			focusOn: '',
 
-			// lerp fix because webkit is being such a little bitch
-			hasPianoScreen: true,
-
 			//for warnings
 			subtitle: '',
+
+			// tone js hates mobile and drei's Html is also on drugs
+			isMobile: true,
 
 			// which index from the available sampler voices i set up for u pucharagis
 			voice: 0,
@@ -302,29 +301,22 @@ export default create(
 			},
 
 			// duh
-			showPianoScreen() {
-				set((state) => {
-					if (!state.ready) return {}
-
-					return { hasPianoScreen: true }
-				})
-			},
-
-			// duh
-			hidePianoScreen() {
-				set((state) => {
-					if (!state.ready) return {}
-
-					return { hasPianoScreen: false }
-				})
-			},
-
-			// duh
 			setSubtitle(newSubtitle) {
 				set((state) => {
 					if (!state.ready) return {}
 
 					return { subtitle: newSubtitle }
+				})
+			},
+
+			//duh
+			setMobile(newIsMobile) {
+				set((state) => {
+					if (state.isMobile !== newIsMobile) {
+						return { isMobile: newIsMobile }
+					} else {
+						return {}
+					}
 				})
 			},
 
