@@ -376,11 +376,14 @@ export default create(
 						isDemoing: false,
 						playingDemo: [],
 						playing: [],
-						soften: 0,
-						sostenuto: 0,
-						sustain: 0,
 						bpm: 120,
 						timeSignature: [4, 4],
+					}
+
+					if (state.isDemoing) {
+						toReturn.soften = 0
+						toReturn.sostenuto = 0
+						toReturn.sustain = 0
 					}
 
 					if (newDemo < demoProps.length) {

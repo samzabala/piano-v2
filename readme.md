@@ -94,6 +94,11 @@ From our lorde and el salvador <a href='https://fonts.google.com/icons/' target=
 
 # Version Log
 
+2.1.2
+- maps for the speaker thingy
+- css shenanigans para pretty ang baby
+- i fix the pedals too
+
 2.1.1
 - my shadows got fucked up ew. fixed
 - added state to check for mobile because tone.js was being an ass

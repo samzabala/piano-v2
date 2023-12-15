@@ -443,52 +443,54 @@ export default function Ui() {
 
 					{showAbout ? (
 						<div className='info-overlay overlay overlay-opaque'>
-							<div className='info-contents'>
-								<div className='info-utility'>
-									<a
-										href='#'
-										onClick={(e) => {
-											e.preventDefault()
-											setShowAbout(false)
-										}}
+							<div className='info-frame'>
+								<div className='info-contents'>
+									<div className='info-utility'>
+										<a
+											href='#'
+											onClick={(e) => {
+												e.preventDefault()
+												setShowAbout(false)
+											}}
+										>
+											Close
+										</a>
+									</div>
+									<h1>Piano v2</h1>
+									<ReactMarkdown
+										rehypePlugins={[rehypeRaw]}
+										skipHtml={false}
 									>
-										Close
-									</a>
-								</div>
-								<h1>Piano v2</h1>
-								<ReactMarkdown
-									rehypePlugins={[rehypeRaw]}
-									skipHtml={false}
-								>
-									{theAbout}
-								</ReactMarkdown>
-								<hr />
-								<a
-									href='https://github.com/samzabala/piano-v2'
-									target='_blank'
-									rel='noreferrer'
-								>
-									Github
-								</a>{' '}
-								|{' '}
-								<a
-									href='https://samzabala.space/miniprojects/three/'
-									target='_blank'
-									rel='noreferrer'
-								>
-									Legacy
-								</a>
-								<h6 className='mine-bitch'>
-									built by{' '}
+										{theAbout}
+									</ReactMarkdown>
+									<hr />
 									<a
-										href='http://samzabala.com'
+										href='https://github.com/samzabala/piano-v2'
 										target='_blank'
 										rel='noreferrer'
 									>
-										Sam Zabala
+										Github
+									</a>{' '}
+									|{' '}
+									<a
+										href='https://samzabala.space/miniprojects/three/'
+										target='_blank'
+										rel='noreferrer'
+									>
+										Legacy
 									</a>
-									.
-								</h6>
+									<h6 className='mine-bitch'>
+										built by{' '}
+										<a
+											href='http://samzabala.com'
+											target='_blank'
+											rel='noreferrer'
+										>
+											Sam Zabala
+										</a>
+										.
+									</h6>
+								</div>
 							</div>
 						</div>
 					) : null}
