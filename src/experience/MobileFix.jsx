@@ -6,7 +6,7 @@ export default function () {
 	const media = useRef()
 
 	useMemo(() => {
-		media.current = matchMedia(`(min-width: 768px) and (pointer: fine)`)
+		media.current = matchMedia(`(min-width: 768px), (pointer: fine)`)
 		setMobile(!media.current.matches)
 	}, [])
 

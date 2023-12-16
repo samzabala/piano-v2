@@ -94,6 +94,12 @@ From our lorde and el salvador <a href='https://fonts.google.com/icons/' target=
 
 # Version Log
 
+2.1.2.1
+- kuyan si ano
+- kwan
+- si kwiri
+- tsaka si loading bar garo mayo nang issue but we shall see
+
 2.1.2
 - maps for the speaker thingy
 - css shenanigans para pretty ang baby

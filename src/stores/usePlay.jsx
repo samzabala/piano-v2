@@ -98,7 +98,7 @@ export default create(
 			// TODO if tone js can allow to swap from this hall reverb fuckery to a chamber or room one because it sounds like how this scene looks. probably not tho because performance is a thing. woULD REALLY LIKE A CHAMBER REFLECTION THO >:[
 
 			// track if we turning the knobs or what so we dont accidentally boop other stuff
-			isAmbiencing: false, // todo kwan make this universal and u pass a bitch so its not just ambience
+			isAmbiencing: false,
 
 			// softens ya boi. also shifts the keys a lil bit coz real pianos actually do that waw
 			soften: 0,
@@ -197,7 +197,6 @@ export default create(
 			},
 
 			// duh
-			// todo: track if midi keyboards did a thing too
 			setTranspose(newTranspose = 0) {
 				set((state) => {
 					if (!state.ready) return {}

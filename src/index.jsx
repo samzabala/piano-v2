@@ -1,6 +1,6 @@
 import './style.scss'
 // import * as THREE from 'three'
-// import { Suspense } from 'react'
+import { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
 import { KeyboardControls } from '@react-three/drei'
@@ -63,32 +63,32 @@ root.render(
 			collapsed={true}
 			hidden={import.meta.env.MODE !== 'development'}
 		/>
-		{/* <Suspense> */}
-		<KeyboardControls map={keebMap}>
-			<Canvas
-				gl={{
-					antialias: true,
-					powerPreference: 'high-performance',
-					// toneMapping: THREE.ACESFilmicToneMapping,
-					// toneMappingExposure: .3,
-					// useLegacyLights: true,
-				}}
-				shadows //dai mo ni lingawon pota
-				camera={{
-					fov: 45,
-					near: 0.01,
-					far: 200,
-					position: [0, 3, 4],
-				}}
-			>
-				<Scene />
-			</Canvas>
-			<Sounds />
-			<Midi />
-			<Keebs />
-		</KeyboardControls>
-		{/* </Suspense> */}
-		<Ui />
+		<Suspense>
+			<KeyboardControls map={keebMap}>
+				<Canvas
+					gl={{
+						antialias: true,
+						powerPreference: 'high-performance',
+						// toneMapping: THREE.ACESFilmicToneMapping,
+						// toneMappingExposure: .3,
+						// useLegacyLights: true,
+					}}
+					shadows //dai mo ni lingawon pota
+					camera={{
+						fov: 45,
+						near: 0.01,
+						far: 200,
+						position: [0, 3, 4],
+					}}
+				>
+					<Scene />
+				</Canvas>
+				<Sounds />
+				<Midi />
+				<Keebs />
+			</KeyboardControls>
+			</Suspense>
 		<MobileFix />
+		<Ui />
 	</>
 )
