@@ -6,7 +6,7 @@ import './../scss/_LoadingBar.scss'
 export default function LoadingBar({
 	text,
 	hide,
-	width,
+	width = 0,
 	buttonText,
 	showButton,
 	onClick,
@@ -18,7 +18,7 @@ export default function LoadingBar({
 				id='loading'
 				className={`overlay ${hide ? 'overlay-disabled' : ''}`}
 				style={{
-					'--progress': hide ? 100 : width,
+					'--progress': width,
 				}}
 			>
 				<div className='overlay-contents'>

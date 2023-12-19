@@ -285,6 +285,12 @@ hr {
 	font-weight: bolder;
 }
 
+:where(input, select, textarea, button) {
+	font: inherit;
+	line-height: inherit;
+	color: inherit;
+}
+
 :where(input) {
 	&:is([type='range'], [type='checkbox'], [type='radio']) {
 		height: 1em;

@@ -3,7 +3,12 @@ UI ng app: pang pretty pretty tsaka UX
 */
 import './../scss/_Ui.scss'
 
-import { useState, useEffect, useMemo } from 'react'
+import {
+	useState,
+	useEffect,
+	useMemo,
+	// useRef
+} from 'react'
 import { useProgress } from '@react-three/drei'
 
 import usePlay from '../stores/usePlay'
@@ -91,44 +96,58 @@ export default function Ui() {
 	}, [])
 
 	const [showStart, setShowStart] = useState(false)
+	// const showStartTimeOut = useRef()
 	const { active, progress, errors, item, loaded, total } = useProgress()
 
-	const progressWidth = useMemo(() => {
-		let toReturn = 69
-
-		if (active) {
-			if (progress < toReturn) {
-				toReturn = progress
-			}
-		} else {
-			toReturn = 100
-		}
-
-		return toReturn
-	}, [progress, active])
+	//fix the backwards loading bug happening what the heck
+	const [progressWidth, setProgressWidth] = useState(0)
+	const [lastTotal, setLastTotal] = useState(0)
 
 	useEffect(() => {
-		// console.log(
-		// 	'active,',
-		// 	active,
-		// 	'progress,',
-		// 	progress,
-		// 	'errors,',
-		// 	errors,
-		// 	'item,',
-		// 	item,
-		// 	'loaded,',
-		// 	loaded,
-		// 	'total ',
-		// 	total,
-		// 	'--------'
-		// )
-		if (!active && progress == 100) {
-			setTimeout(() => {
-				setShowStart(true)
-			}, 50)
+		if (lastTotal !== total) {
+			setLastTotal(total)
 		}
-	}, [active, active, progress, errors, item, loaded, total])
+	}, [active, total])
+
+	useEffect(() => {
+		let toSet
+
+		if (progress == 100 && lastTotal !== total) {
+			toSet = 99
+		} else {
+			if (progress > progressWidth) {
+				toSet = Math.floor(progress) ?? 0
+			}
+		}
+
+		if (toSet) setProgressWidth(toSet)
+	}, [progress, lastTotal, total])
+
+	useEffect(() => {
+		if (import.meta.env.MODE == 'development') {
+			console.log('active,', active)
+			console.log('progress,', progress)
+			console.log('errors,', errors)
+			console.log('item,', item)
+			console.log('loaded,', loaded)
+			console.log('lastTotal,', lastTotal)
+			console.log('total ', total)
+			console.log('progressWidth ', progressWidth)
+			console.log('--------')
+		}
+		// clearInterval(showStartTimeOut.current)
+
+		// god what the fuck
+		if (!active && progress == 100 && lastTotal == total && progressWidth == 100) {
+			// showStartTimeOut.current = setTimeout(() => {
+			setShowStart(true)
+			// }, 200)
+		}
+
+		// return () => {
+		// 	clearInterval(showStartTimeOut.current)
+		// }
+	}, [active, progress, errors, item, loaded, total, lastTotal, progressWidth])
 
 	return (
 		<>
@@ -539,6 +558,7 @@ export default function Ui() {
 				hide={ready}
 				// width={Math.floor(progressWidth / 10)}
 				width={progressWidth}
+				// width={Math.floor(progresss)}
 			/>
 		</>
 	)

@@ -7,4 +7,4 @@ export const getPrimitiveNodes = () => {
 
 	return nodes
 }
-useGLTF.preload(MODEL_PATH)
+// useGLTF.preload(MODEL_PATH)

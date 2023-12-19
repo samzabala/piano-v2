@@ -94,6 +94,12 @@ From our lorde and el salvador <a href='https://fonts.google.com/icons/' target=
 
 # Version Log
 
+2.1.2.2
+- garo kasta si preload habo sa progress bar
+- bitch
+- fixed it tho i think
+- let me know if the loading bar is still being an ass and i will smack it
+
 2.1.2.1
 - kuyan si ano
 - kwan

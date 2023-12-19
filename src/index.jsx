@@ -63,7 +63,7 @@ root.render(
 			collapsed={true}
 			hidden={import.meta.env.MODE !== 'development'}
 		/>
-		<Suspense>
+		<Suspense fallback={null}>
 			<KeyboardControls map={keebMap}>
 				<Canvas
 					gl={{
@@ -87,7 +87,7 @@ root.render(
 				<Midi />
 				<Keebs />
 			</KeyboardControls>
-			</Suspense>
+		</Suspense>
 		<MobileFix />
 		<Ui />
 	</>

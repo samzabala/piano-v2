@@ -99,7 +99,7 @@
 			auto 60%,
 			auto calc(100% - 0.375em),
 			auto 100%;
-		transition: width ease-in-out 0.1s;
+		// transition: width 0s ease-in-out 0.1s;
 	}
 
 	& + .button {
