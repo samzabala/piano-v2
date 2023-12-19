@@ -16,14 +16,16 @@
 	pointer-events: none;
 
 	@media (max-width: 767px) {
-		font-size: min(20px, 1.5vw - 0.05rem, 2.5vh);
-		// left: auto;
-		// right: 3em;
+		font-size: min(20px, 1.75vw - .12rem, 2.5vh);
+		left: auto;
+		right: 3rem;
 	}
 
 	@media (max-width: 767px) and (max-height: 360px) {
 		left: auto;
 		right: 3em;
+		top: 0;
+		// bottom: 0;
 	}
 
 	&-keys {
@@ -37,7 +39,7 @@
 		margin-inline: auto;
 		-webkit-appearance: none;
 		appearance: none;
-		margin-top: 2rem;
+		margin-top: min(15vh,2rem);
 
 		@at-root :is(&, &-item) {
 			min-width: 0;

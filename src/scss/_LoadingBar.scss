@@ -15,13 +15,13 @@
 	// background: var(--c-noot-polar);
 	background-color: rgba(0, 0, 0, 0.2);
 	// font-size: min(10vw,1rem);
-	font-size: max(1vw, 1rem);
+	font-size: 1vw;
 	// border-bottom: 0.25em solid;
 	// border-top: .125em solid;
 	// border-left: .125em solid;
 	pointer-events: none;
 	align-self: stretch;
-	margin-bottom: 2em;
+	margin-bottom: max(2rem, 2em);
 	margin-inline: auto;
 	border-radius: 0.1em;
 

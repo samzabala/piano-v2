@@ -94,6 +94,13 @@ From our lorde and el salvador <a href='https://fonts.google.com/icons/' target=
 
 # Version Log
 
+2.1.2.3
+- chigante pala yung loading bar sa phone sorry nemen
+- fixed
+- tsaka yung mga map they make cut off cut off pag sadit an screen
+- did i just log these changes in tulong wika why yes #multilingualProblems
+- humanda kayo pag natuto akong bisaya tsaka spanish tsaka japanese
+
 2.1.2.2
 - garo kasta si preload habo sa progress bar
 - bitch
