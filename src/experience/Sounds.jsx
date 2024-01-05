@@ -253,7 +253,6 @@ export default function Sounds() {
 			}
 
 			if (metronomeSeed > 0) {
-				theMetronome.interval = '4n'
 				theMetronome.current.start(0)
 				if (!isDemoing) {
 					Tone.Transport.start()

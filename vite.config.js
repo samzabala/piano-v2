@@ -28,7 +28,7 @@ export default {
 	],
 	root: './src',
 	publicDir: './../assets/',
-	assetsInclude: ['**/*.md', '**/*.glb'],
+	assetsInclude: [ '**/*.glb'],
 	base: './',
 	server: {
 		host: true,

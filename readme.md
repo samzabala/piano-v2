@@ -94,6 +94,14 @@ From our lorde and el salvador <a href='https://fonts.google.com/icons/' target=
 
 # Version Log
 
+2.1.2.4
+- godammit this highlight material is shit
+- i just wanted outlines man
+- but noOOOOoo outlines is also shit for pointy bois
+- im salty
+- anyway fixed
+- also didnt realize there was some silence at the beginning of the metronome so it felt like it was pulling audio sorry na po
+- kwan prettier
 2.1.2.3
 - chigante pala yung loading bar sa phone sorry nemen
 - fixed

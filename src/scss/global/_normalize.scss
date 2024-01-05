@@ -103,7 +103,7 @@ select:not(:focus) option {
 	background: var(--c-noot);
 	color: var(--c-noot-polar);
 	border-radius: 0.25rem;
-	opacity: .7;
+	opacity: 0.7;
 
 	& & {
 		background: none;

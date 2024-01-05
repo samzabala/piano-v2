@@ -390,7 +390,8 @@ export default create(
 					}
 
 					if (state.metronomeSeed > 0) {
-						toReturn.metronomeSeed = Math.random() + 0.1
+						// toReturn.metronomeSeed = Math.random() + 0.1
+						toReturn.metronomeSeed = 0 //wtf tone js
 					}
 
 					return toReturn

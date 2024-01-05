@@ -5,9 +5,10 @@ import {
 	// useEffect,
 	useRef,
 } from 'react'
-// import { extend } from '@react-three/fiber'
+import { extend } from '@react-three/fiber'
 import {
-	// shaderMaterial,
+	shaderMaterial,
+	// Outlines,
 	useTexture,
 } from '@react-three/drei'
 
@@ -20,21 +21,54 @@ const EMISSIVE = '#b6e5ff'
 export function HighlightMaterial({ color = EMISSIVE, materialProps }) {
 	const theHighlight = useRef()
 
+	const HullMaterial = shaderMaterial(
+		{
+			color: new THREE.Color('#ff005b'),
+			size: 0.1,
+		},
+		/*glsl*/ `
+	  uniform float size;
+	  
+	  void main() {
+		vec3 transformed = position + normal * size/10.;
+		gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(transformed, 1.);
+	  }
+	  `,
+		/*glsl*/ `
+	  uniform vec3 color;
+	  
+	  void main() {
+		gl_FragColor = vec4(color, .8);
+	  }
+	  `
+	)
+
+	extend({ HullMaterial })
+
 	return (
-		<meshStandardMaterial
-			color={color}
-			ref={theHighlight}
-			// receiveShadows
-			// opacity={0.96}
-			// transparent
-			roughness={1.5}
-			metalness={1}
-			// emissive={color}
-			// emissiveIntensity={0.2}
-			// side={THREE.BackSide}
-			depthWrite={false}
-			{...materialProps}
-		/>
+		<>
+			{/* <meshStandardMaterial */}
+			<hullMaterial
+				color={color}
+				ref={theHighlight}
+				// receiveShadows
+				transparent
+				// roughness={1.5}
+				// metalness={1}
+				// emissive={color}
+				// emissiveIntensity={0.2}
+				// side={THREE.BackSide}
+				depthWrite={false}
+				{...materialProps}
+			/>
+			{/* <Outlines
+				screenspace
+				thickness={5}
+				color={color}
+				length={2}
+				angle={ Math.PI * 1.5 }
+			/> */}
+		</>
 	)
 }
 
